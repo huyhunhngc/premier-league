@@ -1,4 +1,5 @@
 [versions]
+jetbrainsNavigationCompose = "2.7.0-alpha07"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.25"
 kotlinx-coroutines = "1.9.0"
@@ -34,9 +35,14 @@ multikApi = "0.1.1"
 multikJvm = "0.1.1"
 okalgo = "0.0.2"
 kotlinStatistics = "1.2.1"
+navigationCompose = "2.8.4"
+navigationComposeVersion = "2.8.4"
+sqliteKtx = "2.4.0"
+sqliteAndroid = "2.5.0-alpha11"
 
 
 [libraries]
+jetbrains-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "jetbrainsNavigationCompose" }
 kotlin-statistics = { module = "org.nield:kotlin-statistics", version.ref = "kotlinStatistics" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-dateTime" }
@@ -95,6 +101,9 @@ slf4j = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 junit = { module = "junit:junit", version.ref = "junit" }
 androidx-datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
+androidx-sqlite-ktx = { group = "androidx.sqlite", name = "sqlite-ktx", version.ref = "sqliteKtx" }
+androidx-sqlite-android = { group = "androidx.sqlite", name = "sqlite-android", version.ref = "sqliteAndroid" }
 
 [bundles]
 ktor-common = ["ktor-client-core", "ktor-client-json", "ktor-client-logging", "ktor-client-serialization", "ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]

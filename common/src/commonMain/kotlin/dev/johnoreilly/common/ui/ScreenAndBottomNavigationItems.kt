@@ -1,4 +1,4 @@
-package dev.johnoreilly.fantasypremierleague.presentation
+package dev.johnoreilly.common.ui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(val title: String) {
     data object PlayerListScreen : Screen("PlayerListScreen")
+    data object PlayerSummaryScreen : Screen("PlayerSummaryScreen")
     data object PlayerDetailsScreen : Screen("PlayerDetailsScreen")
     data object FixtureListScreen : Screen("FixtureListScreen")
     data object FixtureDetailsScreen : Screen("FixtureDetailsScreen")

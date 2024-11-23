@@ -24,8 +24,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import dev.johnoreilly.fantasypremierleague.presentation.Screen
-import dev.johnoreilly.fantasypremierleague.presentation.bottomNavigationItems
+import dev.johnoreilly.common.ui.Screen
+import dev.johnoreilly.common.ui.bottomNavigationItems
 import dev.johnoreilly.fantasypremierleague.presentation.fixtures.FixtureDetails.FixtureDetailsView
 import dev.johnoreilly.fantasypremierleague.presentation.fixtures.FixturesListView
 import dev.johnoreilly.fantasypremierleague.presentation.global.FantasyPremierLeagueTheme

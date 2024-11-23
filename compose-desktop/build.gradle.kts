@@ -14,6 +14,8 @@ version = "1.0-SNAPSHOT"
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(projects.common)
+    implementation(libs.image.loader)
+    implementation(libs.jetbrains.navigation.compose)
 }
 
 application {

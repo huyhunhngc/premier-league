@@ -13,6 +13,8 @@ import dev.johnoreilly.common.model.Player
 import dev.johnoreilly.common.model.Team
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -68,23 +70,24 @@ class FantasyPremierLeagueRepository : KoinComponent {
         }
         database.fantasyPremierLeagueDao().insertTeamList(teamList)
 
-
         // store players
         val playerList = bootstrapStaticInfoDto.elements.map { playerDto ->
             val playerName = "${playerDto.first_name} ${playerDto.second_name}"
             val playerImageUrl = "https://resources.premierleague.com/premierleague/photos/players/110x140/p${playerDto.code}.png"
-            val teamName = teamList.find { team -> team.code == playerDto.team_code }?.name ?: ""
+            val team = teamList.find { team -> team.code == playerDto.team_code }
+            val teamPhotoUrl = "https://resources.premierleague.com/premierleague/badges/100/t${team?.code}.png"
             val currentPrice = playerDto.now_cost / 10.0
 
             Player(
                 playerDto.id,
                 playerName,
-                teamName,
+                team?.name.orEmpty(),
                 playerImageUrl,
                 playerDto.total_points,
                 currentPrice,
                 playerDto.goals_scored,
-                playerDto.assists
+                playerDto.assists,
+                teamPhotoUrl
             )
         }
         database.fantasyPremierLeagueDao().insertPlayerList(playerList)

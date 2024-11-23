@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import dev.johnoreilly.common.database.AppDatabase
 import dev.johnoreilly.common.database.dbFileName
+import dev.johnoreilly.common.database.migration1to2
 import io.ktor.client.engine.android.*
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
@@ -24,6 +25,7 @@ fun createRoomDatabase(ctx: Context): AppDatabase {
     return Room.databaseBuilder<AppDatabase>(ctx, dbFile.absolutePath)
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)
+        .addMigrations(migration1to2)
         .build()
 }
 

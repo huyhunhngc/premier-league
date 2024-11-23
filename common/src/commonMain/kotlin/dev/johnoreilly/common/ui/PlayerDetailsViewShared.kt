@@ -47,7 +47,8 @@ import io.github.koalaplot.core.xychart.TickPosition
 import io.github.koalaplot.core.xychart.XYChart
 import io.github.koalaplot.core.xychart.rememberAxisStyle
 import org.jetbrains.compose.resources.stringResource
-
+import primaryEpl
+import primaryEplContainer
 
 @Composable
 fun PlayerDetailsViewShared(player: Player, playerHistory: List<PlayerPastHistory>) {
@@ -85,7 +86,6 @@ fun PlayerDetailsViewShared(player: Player, playerHistory: List<PlayerPastHistor
             )
         }
         PlayerStatView(stringResource(Res.string.team),  player.team)
-        //PlayerStatView("Team",  player.team)
         PlayerStatView("CurrentPrice", player.currentPrice.toString())
         PlayerStatView("Points", player.points.toString())
         PlayerStatView("Goals Scored", player.goalsScored.toString())
@@ -118,7 +118,7 @@ fun PlayerStatView(statName: String, statValue: String) {
             Column {
                 Text(
                     text = statValue,
-                    color = Color(0xFF3179EA),
+                    color = primaryEpl,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -248,7 +248,7 @@ private fun BarSamplePlot(
                 series = listOf(barChartEntries.value),
                 bar = { _, _, value ->
                     DefaultVerticalBar(
-                        brush = SolidColor(Color.Blue),
+                        brush = SolidColor(primaryEplContainer),
                         modifier = Modifier.fillMaxWidth(barWidth),
                     ) {
                         HoverSurface { Text(value.yMax.toString()) }

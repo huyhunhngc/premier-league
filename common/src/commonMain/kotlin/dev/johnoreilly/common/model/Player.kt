@@ -3,7 +3,6 @@ package dev.johnoreilly.common.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity
 data class Player(
     @PrimaryKey val id: Int,
@@ -13,5 +12,6 @@ data class Player(
     val points: Int,
     val currentPrice: Double,
     val goalsScored: Int,
-    val assists: Int
+    val assists: Int,
+    val teamPhotoUrl: String,
 )
