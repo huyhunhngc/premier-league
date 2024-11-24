@@ -22,14 +22,14 @@ This project currently uses iOS16 features (e.g. Swift Charts) so requires use o
 ## Screenshots
 
 ### Android
-<img src="https://user-images.githubusercontent.com/6302/210137422-7c289cbb-d428-4ae3-9183-6c481184b5fa.png" width=300/>|
+<img src="https://github.com/user-attachments/assets/a85b8df8-6806-48a4-9f72-0c3cabe29e1b" width=300/>|
 
 ### iOS
 <img src="https://user-images.githubusercontent.com/6302/233188752-f18cb96d-cf2b-45a1-af7d-fdad0db06dfb.png" width=300/>|
 
 ### Desktop
 
-<img width="912" alt="Screenshot 2023-09-14 at 17 07 32" src="https://github.com/joreilly/FantasyPremierLeague/assets/6302/86582f04-60e7-480c-97ae-908c31dfd321">
+<img width="912" alt="Screenshot 2023-09-14 at 17 07 32" src="https://raw.githubusercontent.com/huyhunhngc/premier-league/refs/heads/main/art/screenshot3.png">
 
 ### Kotlin Notebook
 <img width="916" alt="Screenshot 2024-04-06 at 11 03 15" src="https://github.com/joreilly/FantasyPremierLeague/assets/6302/37fef7a1-190d-4c14-acdd-5dafc11e8e30">
