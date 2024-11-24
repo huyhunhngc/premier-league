@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
@@ -31,7 +32,7 @@ class FantasyPremierLeagueRepository : KoinComponent {
     private val database: AppDatabase by inject()
     private val appSettings: AppSettings by inject()
 
-    val coroutineScope = CoroutineScope(Dispatchers.Default)
+    private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     val leagues = appSettings.leagues
 
@@ -73,9 +74,9 @@ class FantasyPremierLeagueRepository : KoinComponent {
         // store players
         val playerList = bootstrapStaticInfoDto.elements.map { playerDto ->
             val playerName = "${playerDto.first_name} ${playerDto.second_name}"
-            val playerImageUrl = "https://resources.premierleague.com/premierleague/photos/players/110x140/p${playerDto.code}.png"
+            val playerImageUrl = playerPhotoUrl(playerDto.code)
             val team = teamList.find { team -> team.code == playerDto.team_code }
-            val teamPhotoUrl = "https://resources.premierleague.com/premierleague/badges/100/t${team?.code}.png"
+            val teamPhotoUrl = teamPhotoUrl(team?.code)
             val currentPrice = playerDto.now_cost / 10.0
 
             Player(
@@ -94,13 +95,13 @@ class FantasyPremierLeagueRepository : KoinComponent {
 
         // store fixtures
         val fixtureList = fixtures.map { fixtureDto ->
-            val homeTeam = teamList.find() { team -> team.index == fixtureDto.team_h }
-            val awayTeam = teamList.find() { team -> team.index == fixtureDto.team_a }
+            val homeTeam = teamList.find { team -> team.index == fixtureDto.team_h }
+            val awayTeam = teamList.find { team -> team.index == fixtureDto.team_a }
 
             val homeTeamName = homeTeam?.name ?: ""
             val awayTeamName = awayTeam?.name ?: ""
-            val homeTeamPhotoUrl = "https://resources.premierleague.com/premierleague/badges/t${homeTeam?.code}.png"
-            val awayTeamPhotoUrl = "https://resources.premierleague.com/premierleague/badges/t${awayTeam?.code}.png"
+            val homeTeamPhotoUrl = teamPhotoUrl(homeTeam?.code)
+            val awayTeamPhotoUrl = teamPhotoUrl(awayTeam?.code)
 
             val localKickoffTime = fixtureDto.kickoff_time.toString().toInstant()
                 .toLocalDateTime(TimeZone.currentSystemDefault())
@@ -154,5 +155,21 @@ class FantasyPremierLeagueRepository : KoinComponent {
 
     suspend fun updateLeagues(leagues: List<String>) {
         appSettings.updatesLeaguesSetting(leagues)
+    }
+
+    suspend fun getTeamByName(teamName: String): Team? {
+        return database.fantasyPremierLeagueDao().getTeamByName(teamName)
+    }
+
+    companion object {
+        private const val PREMIER_LEAGUE_RESOURCE_URL = "https://resources.premierleague.com/premierleague"
+
+        fun teamPhotoUrl(teamCode: Int?): String {
+            return "$PREMIER_LEAGUE_RESOURCE_URL/badges/100/t$teamCode.png"
+        }
+
+        fun playerPhotoUrl(playerId: Int): String {
+            return "$PREMIER_LEAGUE_RESOURCE_URL/photos/players/110x140/p$playerId.png"
+        }
     }
 }

@@ -4,15 +4,18 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Divider
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,17 +23,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.seiko.imageloader.rememberImagePainter
 import dev.johnoreilly.common.model.Player
 import dev.johnoreilly.common.model.PlayerPastHistory
+import dev.johnoreilly.common.ui.ext.extractTeamCode
 import fantasypremierleague.common.generated.resources.Res
+import fantasypremierleague.common.generated.resources.background_header
+import fantasypremierleague.common.generated.resources.background_header_mobile
 import fantasypremierleague.common.generated.resources.team
 import io.github.koalaplot.core.ChartLayout
 import io.github.koalaplot.core.bar.BarChartEntry
@@ -46,9 +56,10 @@ import io.github.koalaplot.core.xychart.LinearAxisModel
 import io.github.koalaplot.core.xychart.TickPosition
 import io.github.koalaplot.core.xychart.XYChart
 import io.github.koalaplot.core.xychart.rememberAxisStyle
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import primaryEpl
-import primaryEplContainer
+import dev.johnoreilly.common.ui.theme.primaryEpl
+import dev.johnoreilly.common.ui.theme.primaryEplContainer
 
 @Composable
 fun PlayerDetailsViewShared(player: Player, playerHistory: List<PlayerPastHistory>) {
@@ -60,39 +71,101 @@ fun PlayerDetailsViewShared(player: Player, playerHistory: List<PlayerPastHistor
             )
         )
     }
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.size(16.dp))
-        val painter = rememberImagePainter(player.photoUrl)
-        Image(
-            painter, null,
-            modifier = Modifier.size(150.dp),
-            contentScale = ContentScale.Fit,
-        )
-        Spacer(modifier = Modifier.size(8.dp))
+        var isWide by remember { mutableStateOf(false) }
+
+        BoxWithConstraints {
+            isWide = maxWidth > 500.dp
+            val colorHeader = player.extractTeamCode()
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .background(Color(colorHeader.second))
+                    .paint(
+                        painterResource(
+                            if (isWide) Res.drawable.background_header
+                            else Res.drawable.background_header_mobile
+                        ),
+                        colorFilter = ColorFilter.tint(Color(colorHeader.first).copy(alpha = 0.4f)),
+                        contentScale = ContentScale.FillBounds
+                    )
+            ) {
+                val imageSize = if (isWide) 180.dp else 150.dp
+                val alignment = if (isWide) Alignment.BottomStart else Alignment.BottomEnd
+                val playerName = player.name.split(" ")
+                val firstname = playerName.firstOrNull().orEmpty()
+                val lastname = playerName.lastOrNull().orEmpty()
+                Image(
+                    painter = rememberImagePainter(player.photoUrl),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(imageSize)
+                        .align(alignment),
+                    contentScale = ContentScale.Fit,
+                )
+                Image(
+                    painter = rememberImagePainter(player.teamPhotoUrl),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .size(60.dp)
+                        .background(Color.White, CircleShape)
+                        .padding(4.dp)
+                        .align(if (isWide) Alignment.BottomEnd else Alignment.BottomStart),
+                    contentScale = ContentScale.Fit,
+                )
+                Column(
+                    modifier = Modifier.align(
+                        if (isWide) Alignment.TopCenter else Alignment.TopStart
+                    ).let {
+                        if (isWide) {
+                            it.padding(top = 16.dp)
+                        } else {
+                            it.padding(start = 16.dp, top = 42.dp)
+                        }
+                    }
+                ) {
+                    Text(
+                        text = firstname,
+                        color = Color(colorHeader.third),
+                        style = MaterialTheme.typography.bodyMedium
+                            .copy(fontSize = if (isWide) 36.sp else 18.sp)
+                    )
+                    Text(
+                        text = lastname,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(colorHeader.third),
+                        style = MaterialTheme.typography.titleMedium
+                            .copy(fontSize = if (isWide) 40.sp else 20.sp)
+                    )
+                }
+            }
+        }
+
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.LightGray)
+                .background(primaryEplContainer)
                 .padding(4.dp)
         ) {
             Text(
-                text = "INFO",
+                text = "Stats",
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = Color.White
             )
         }
-        PlayerStatView(stringResource(Res.string.team),  player.team)
+        PlayerStatView(stringResource(Res.string.team), player.team)
         PlayerStatView("CurrentPrice", player.currentPrice.toString())
         PlayerStatView("Points", player.points.toString())
         PlayerStatView("Goals Scored", player.goalsScored.toString())
         PlayerStatView("Assists", player.assists.toString())
 
         Spacer(modifier = Modifier.size(8.dp))
-
         if (playerHistory.isNotEmpty()) {
             BarSamplePlot(playerHistory, tickPositionState, "Points by Season")
         }
@@ -123,7 +196,7 @@ fun PlayerStatView(statName: String, statValue: String) {
                 )
             }
         }
-        Divider(thickness = 1.dp)
+        HorizontalDivider(thickness = 1.dp)
     }
 }
 

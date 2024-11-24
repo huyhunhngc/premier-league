@@ -28,6 +28,9 @@ interface FantasyPremierLeagueDao {
     @Query("SELECT * FROM Player WHERE id = :id")
     suspend fun getPlayer(id: Int): Player
 
+    @Query("SELECT * FROM Team WHERE name = :name LIMIT 1")
+    suspend fun getTeamByName(name: String): Team?
+
     @Query("SELECT * FROM GameFixture")
     fun getFixtureListAsFlow(): Flow<List<GameFixture>>
 

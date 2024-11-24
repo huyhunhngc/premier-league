@@ -1,3 +1,5 @@
+package dev.johnoreilly.common.ui.theme
+
 import androidx.compose.ui.graphics.Color
 
 val primaryEpl = Color(0xFF35003A)

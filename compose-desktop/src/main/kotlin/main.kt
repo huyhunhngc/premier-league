@@ -3,6 +3,8 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
@@ -23,7 +25,7 @@ val lightThemeColors = lightColors(
 )
 
 fun main() = application {
-    val windowState = rememberWindowState()
+    val windowState = rememberWindowState(size = DpSize(1000.dp, 700.dp),)
     val koin = initKoin(enableNetworkLogs = true).koin
 
     Window(

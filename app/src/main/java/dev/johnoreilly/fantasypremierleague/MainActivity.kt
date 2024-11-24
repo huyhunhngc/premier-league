@@ -1,8 +1,11 @@
 package dev.johnoreilly.fantasypremierleague
 
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,13 +37,15 @@ import dev.johnoreilly.fantasypremierleague.presentation.players.PlayerListView
 import dev.johnoreilly.fantasypremierleague.presentation.players.playerDetails.PlayerDetailsView
 import dev.johnoreilly.fantasypremierleague.presentation.settings.SettingsView
 
-
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        if (VERSION.SDK_INT >= VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
 
         setContent {
             FantasyPremierLeagueTheme {

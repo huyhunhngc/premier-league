@@ -35,21 +35,12 @@ fun PlayerDetailsView(playerId: Int, popBackStack: () -> Unit) {
             playerHistory = repository.getPlayerHistoryData(player.id)
         }
 
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(text = player.name)
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { popBackStack() }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                        }
-                    }
-                )
-            }) {
+        Scaffold {
             Column(Modifier.padding(it)) {
                 PlayerDetailsViewShared(player, playerHistory)
+            }
+            IconButton(onClick = { popBackStack() }) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
         }
     }

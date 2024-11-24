@@ -19,7 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.seiko.imageloader.rememberImagePainter
 import dev.johnoreilly.common.model.Player
-import gradientGreenYellow
+import dev.johnoreilly.common.ui.theme.gradientGreenYellow
 
 @Composable
 fun PlayerView(
