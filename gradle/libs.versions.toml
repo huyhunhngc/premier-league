@@ -11,6 +11,7 @@ androidGradlePlugin = "8.7.2"
 koalaplot = "0.5.3"
 koin = "4.0.0"
 ktor = "3.0.0"
+material3Desktop = "1.7.0"
 slf4j = "2.0.16"
 skie = "0.9.3"
 datastore = "1.1.1"
@@ -70,6 +71,7 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
+material3-desktop = { module = "org.jetbrains.compose.material3:material3-desktop", version.ref = "material3Desktop" }
 multik-api = { module = "org.jetbrains.kotlinx:multik-api", version.ref = "multikApi" }
 multik-jvm = { module = "org.jetbrains.kotlinx:multik-jvm", version.ref = "multikJvm" }
 okalgo = { module = "org.ojalgo:okalgo", version.ref = "okalgo" }

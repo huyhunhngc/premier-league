@@ -16,6 +16,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -50,7 +51,7 @@ fun PlayersSummaryView(
     val repository = LocalKoin.current.get<FantasyPremierLeagueRepository>()
     var selectedPlayer by rememberSaveable { mutableStateOf<Player?>(null) }
     var playerHistory by remember { mutableStateOf(emptyList<PlayerPastHistory>()) }
-    var isWide by remember { mutableStateOf(false) }
+    var isExpanded by remember { mutableStateOf(false) }
     LaunchedEffect(selectedPlayer) {
         selectedPlayer?.let {
             playerHistory = repository.getPlayerHistoryData(it.id)
@@ -69,10 +70,10 @@ fun PlayersSummaryView(
     }.collectAsState(emptyList())
 
     BoxWithConstraints {
-        isWide = maxWidth.value > 700
+        isExpanded = maxWidth.value > 700
         Row(Modifier.fillMaxSize()) {
             Box(
-                modifier = Modifier.fillMaxWidth(if (isWide) 0.3f else 1f),
+                modifier = Modifier.fillMaxWidth(if (isExpanded) 0.3f else 1f),
                 contentAlignment = Alignment.Center
             ) {
                 Column {
@@ -83,14 +84,14 @@ fun PlayersSummaryView(
                     )
                     PlayerListView(playerList, selectedPlayer) {
                         selectedPlayer = it
-                        if (!isWide) {
+                        if (!isExpanded) {
                             onPlayerSelected(it)
                         }
                     }
                 }
 
             }
-            if (isWide) {
+            if (isExpanded) {
                 if (selectedPlayer == null) selectedPlayer = playerList.firstOrNull()
                 selectedPlayer?.let { player ->
                     PlayerDetailsViewShared(player, playerHistory)
@@ -114,7 +115,7 @@ fun PlayerSearchView(
         value = searchQuery,
         onValueChange = onValueChange,
         label = {
-            Text(text = "Search")
+            Text(text = "Search", style = MaterialTheme.typography.labelLarge)
         },
         leadingIcon = {
             Icon(

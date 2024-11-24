@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
@@ -20,12 +21,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.placeholder.placeholder
 import dev.johnoreilly.common.model.Player
@@ -65,17 +71,19 @@ fun PlayerListView(
                 }
             )
         }) {
-        Column(Modifier.padding(it)) {
+        Column {
             val isDataLoading = allPlayers.value.isEmpty()
             TextField(
                 singleLine = true,
                 value = playerSearchQuery.value,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(it)
                     .placeholder(
                         visible = isDataLoading,
                         color = lowfidelitygray
-                    ),
+                    ).padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                    .clip(shape = RoundedCornerShape(24.dp)),
                 label = {
                     Text(text = "Search")
                 },
@@ -103,7 +111,12 @@ fun PlayerListView(
                             contentDescription = "Clear search"
                         )
                     }
-                }
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                )
             )
 
             when (val uiState = playerListUIState.value) {

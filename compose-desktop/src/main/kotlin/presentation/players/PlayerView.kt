@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,7 +32,7 @@ fun PlayerView(
             .fillMaxWidth()
             .background(
                 if (player == selectedPlayer) Brush.linearGradient(
-                    colors = gradientGreenYellow // Gradient colors
+                    colors = gradientGreenYellow
                 ) else Brush.linearGradient(
                     colors = listOf(Color.LightGray, Color.White)
                 ),
@@ -48,17 +48,17 @@ fun PlayerView(
             contentScale = ContentScale.Fit,
         )
         Column(modifier = Modifier.weight(1f).padding(start = 8.dp)) {
-            Text(player.name, style = MaterialTheme.typography.body1)
+            Text(player.name, style = MaterialTheme.typography.titleMedium)
             Row {
                 Text(
                     player.team,
-                    style = MaterialTheme.typography.subtitle2,
+                    style = MaterialTheme.typography.labelMedium,
                     color = Color.DarkGray
                 )
-                Text(" • ", style = MaterialTheme.typography.subtitle2, color = Color.DarkGray)
+                Text(" • ", style = MaterialTheme.typography.labelMedium, color = Color.DarkGray)
                 Text(
                     player.points.toString(),
-                    style = MaterialTheme.typography.subtitle2,
+                    style = MaterialTheme.typography.labelMedium,
                     color = Color.DarkGray
                 )
             }

@@ -1,14 +1,14 @@
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import dev.johnoreilly.common.di.initKoin
+import dev.johnoreilly.common.ui.theme.PremierLeagueTypography
 import org.koin.core.Koin
 import presentation.main.MainGraph
 
@@ -17,15 +17,8 @@ val LocalKoin = compositionLocalOf<Koin> {
     error("No LocalRepository provided")
 }
 
-val lightThemeColors = lightColors(
-    primary = Color(0xFFDD0D3C),
-    primaryVariant = Color(0xFFC20029),
-    secondary = Color.White,
-    error = Color(0xFFD00036)
-)
-
 fun main() = application {
-    val windowState = rememberWindowState(size = DpSize(1000.dp, 700.dp),)
+    val windowState = rememberWindowState(size = DpSize(1000.dp, 800.dp))
     val koin = initKoin(enableNetworkLogs = true).koin
 
     Window(
@@ -34,7 +27,7 @@ fun main() = application {
         title = "Fantasy Premier League"
     ) {
         MaterialTheme(
-            colors = lightThemeColors
+            typography = PremierLeagueTypography()
         ) {
             CompositionLocalProvider(
                 LocalKoin provides koin
@@ -44,4 +37,3 @@ fun main() = application {
         }
     }
 }
-
