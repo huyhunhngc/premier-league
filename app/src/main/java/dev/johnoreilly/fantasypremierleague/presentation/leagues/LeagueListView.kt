@@ -39,8 +39,8 @@ fun LeagueListView() {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = { Text("Leagues") })
-        }) {
-
+        }
+    ) {
         Box(Modifier.padding(it)) {
             LazyColumn(Modifier.fillMaxSize()) {
                 leagueStandings.forEach { league ->
@@ -55,7 +55,6 @@ fun LeagueListView() {
         }
     }
 }
-
 
 @Composable
 internal fun Header(

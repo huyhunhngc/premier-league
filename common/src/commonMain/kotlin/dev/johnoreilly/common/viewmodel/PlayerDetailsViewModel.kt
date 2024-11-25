@@ -8,6 +8,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 open class PlayerDetailsViewModel : ViewModel(), KoinComponent {
+
     private val repository: FantasyPremierLeagueRepository by inject()
 
     suspend fun getPlayer(id: Int): Player {

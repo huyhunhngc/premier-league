@@ -8,6 +8,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,7 +23,11 @@ import dev.johnoreilly.common.model.PlayerPastHistory
 import dev.johnoreilly.common.ui.PlayerDetailsViewShared
 
 @Composable
-fun PlayerDetailsView(playerId: Int, popBackStack: () -> Unit) {
+fun PlayerDetailsView(
+    windowSizeClass: WindowSizeClass,
+    playerId: Int,
+    popBackStack: () -> Unit
+) {
     val repository = LocalKoin.current.get<FantasyPremierLeagueRepository>()
     val playerState by produceState<Player?>(initialValue = null) {
         value = repository.getPlayer(playerId)
@@ -35,7 +40,7 @@ fun PlayerDetailsView(playerId: Int, popBackStack: () -> Unit) {
 
         Scaffold { padding ->
             Column(Modifier.padding(padding)) {
-                PlayerDetailsViewShared(player, playerHistory)
+                PlayerDetailsViewShared(windowSizeClass, player, playerHistory)
             }
             IconButton(onClick = { popBackStack() }) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")

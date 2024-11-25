@@ -16,24 +16,24 @@ sealed class Screen(val title: String) {
     data object SettingsScreen : Screen("SettingsScreen")
 }
 
-data class BottomNavigationitem(
+data class BottomNavigationItem(
     val route: String,
     val icon: ImageVector,
     val iconContentDescription: String
 )
 
 val bottomNavigationItems = listOf(
-    BottomNavigationitem(
+    BottomNavigationItem(
         Screen.PlayerListScreen.title,
         Icons.Default.Person,
         "Player"
     ),
-    BottomNavigationitem(
+    BottomNavigationItem(
         Screen.FixtureListScreen.title,
         Icons.Filled.DateRange,
         "Fixtures"
     ),
-    BottomNavigationitem(
+    BottomNavigationItem(
         Screen.LeagueStandingsListScreen.title,
         Icons.Filled.List,
         "League"

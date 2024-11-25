@@ -16,6 +16,9 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -39,6 +42,7 @@ import dev.johnoreilly.fantasypremierleague.presentation.settings.SettingsView
 
 class MainActivity : ComponentActivity() {
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -48,12 +52,13 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
+            val windowSize = calculateWindowSizeClass()
             FantasyPremierLeagueTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainLayout()
+                    MainLayout(windowSize)
                 }
             }
         }
@@ -63,9 +68,8 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MainLayout() {
+fun MainLayout(windowSizeClass: WindowSizeClass) {
     val navController = rememberNavController()
-
     Scaffold(
         bottomBar = { FantasyPremierLeagueBottomNavigation(navController) },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -89,6 +93,7 @@ fun MainLayout() {
                     val playerId: Int? = navBackStackEntry.arguments?.getInt("playerId")
                     playerId?.let {
                         PlayerDetailsView(
+                            windowSizeClass,
                             playerId,
                             popBackStack = { navController.popBackStack() })
                     }

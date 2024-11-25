@@ -1,5 +1,6 @@
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material.lightColors
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.DpSize
@@ -17,6 +18,7 @@ val LocalKoin = compositionLocalOf<Koin> {
     error("No LocalRepository provided")
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 fun main() = application {
     val windowState = rememberWindowState(size = DpSize(1000.dp, 800.dp))
     val koin = initKoin(enableNetworkLogs = true).koin
@@ -26,13 +28,14 @@ fun main() = application {
         state = windowState,
         title = "Fantasy Premier League"
     ) {
+        val windowSize = calculateWindowSizeClass()
         MaterialTheme(
             typography = PremierLeagueTypography()
         ) {
             CompositionLocalProvider(
                 LocalKoin provides koin
             ) {
-                MainGraph()
+                MainGraph(windowSize)
             }
         }
     }

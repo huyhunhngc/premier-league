@@ -1,10 +1,14 @@
 package dev.johnoreilly.common.ui
 
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import dev.johnoreilly.common.model.Player
 import dev.johnoreilly.common.model.PlayerPastHistory
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Preview
 @Composable
 fun PlayerDetailsViewSharedPreview() {
@@ -17,5 +21,5 @@ fun PlayerDetailsViewSharedPreview() {
     val playerPastHistory3 = PlayerPastHistory("2023", 60)
 
     val playerHistory = listOf(playerPastHistory1, playerPastHistory2, playerPastHistory3)
-    PlayerDetailsViewShared(player, playerHistory)
+    PlayerDetailsViewShared(calculateWindowSizeClass(), player, playerHistory)
 }

@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import dev.johnoreilly.common.model.PlayerPastHistory
 import dev.johnoreilly.common.ui.theme.primaryEplContainer
 import io.github.koalaplot.core.ChartLayout
-import io.github.koalaplot.core.bar.BarChartEntry
 import io.github.koalaplot.core.bar.DefaultBarChartEntry
 import io.github.koalaplot.core.bar.DefaultVerticalBar
 import io.github.koalaplot.core.bar.VerticalBarChart
@@ -33,6 +32,9 @@ import io.github.koalaplot.core.xychart.TickPosition
 import io.github.koalaplot.core.xychart.XYChart
 import io.github.koalaplot.core.xychart.rememberAxisStyle
 
+internal val padding = 8.dp
+internal const val barWidth = 0.8f
+
 @OptIn(ExperimentalKoalaPlotApi::class)
 @Composable
 fun BarSamplePlot(
@@ -41,12 +43,10 @@ fun BarSamplePlot(
     title: String
 ) {
     val barChartEntries = remember(playerHistory) { mutableStateOf(barChartEntries(playerHistory)) }
-
     ChartLayout(
         modifier = Modifier.padding(8.dp),
         title = { ChartTitle(title) }
     ) {
-
         XYChart(
             xAxisModel = CategoryAxisModel(playerHistory.map {
                 it.seasonName.takeLast(2)
@@ -71,7 +71,8 @@ fun BarSamplePlot(
             yAxisTitle = {
                 AxisTitle(
                     "Points",
-                    modifier = Modifier.rotateVertically(VerticalRotation.COUNTER_CLOCKWISE)
+                    modifier = Modifier
+                        .rotateVertically(VerticalRotation.COUNTER_CLOCKWISE)
                         .padding(bottom = padding)
                 )
             },
@@ -97,19 +98,12 @@ data class TickPositionState(
     val horizontalAxis: TickPosition
 )
 
-private fun barChartEntries(playerHistory: List<PlayerPastHistory>): List<BarChartEntry<String, Float>> {
-    val list = mutableListOf<BarChartEntry<String, Float>>()
-
-    playerHistory.forEach { player ->
-        list.add(
-            DefaultBarChartEntry(
-                xValue = player.seasonName.takeLast(2),
-                yMin = 0f,
-                yMax = player.totalPoints.toFloat(),
-            )
-        )
-    }
-    return list
+private fun barChartEntries(playerHistory: List<PlayerPastHistory>) = playerHistory.map { player ->
+    DefaultBarChartEntry(
+        xValue = player.seasonName.takeLast(2),
+        yMin = 0f,
+        yMax = player.totalPoints.toFloat(),
+    )
 }
 
 @Composable
@@ -143,9 +137,6 @@ fun AxisLabel(label: String, modifier: Modifier = Modifier) {
         modifier = modifier
     )
 }
-
-internal val padding = 8.dp
-internal val barWidth = 0.8f
 
 @Composable
 fun HoverSurface(modifier: Modifier = Modifier, content: @Composable () -> Unit) {

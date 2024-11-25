@@ -3,7 +3,6 @@ package presentation.players
 import LocalKoin
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +16,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -46,6 +47,7 @@ import androidx.compose.material.TextField as ComposeTextField
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @Composable
 fun PlayersSummaryView(
+    windowSizeClass: WindowSizeClass,
     onPlayerSelected: (player: Player) -> Unit,
 ) {
     val repository = LocalKoin.current.get<FantasyPremierLeagueRepository>()
@@ -69,33 +71,31 @@ fun PlayersSummaryView(
         }
     }.collectAsState(emptyList())
 
-    BoxWithConstraints {
-        isExpanded = maxWidth.value > 700
-        Row(Modifier.fillMaxSize()) {
-            Box(
-                modifier = Modifier.fillMaxWidth(if (isExpanded) 0.3f else 1f),
-                contentAlignment = Alignment.Center
-            ) {
-                Column {
-                    PlayerSearchView(
-                        searchQuery,
-                        onValueChange = { searchQuery = it },
-                        onValueClear = { searchQuery = "" }
-                    )
-                    PlayerListView(playerList, selectedPlayer) {
-                        selectedPlayer = it
-                        if (!isExpanded) {
-                            onPlayerSelected(it)
-                        }
+    isExpanded = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
+    Row(Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier.fillMaxWidth(if (isExpanded) 0.3f else 1f),
+            contentAlignment = Alignment.Center
+        ) {
+            Column {
+                PlayerSearchView(
+                    searchQuery,
+                    onValueChange = { searchQuery = it },
+                    onValueClear = { searchQuery = "" }
+                )
+                PlayerListView(playerList, selectedPlayer) {
+                    selectedPlayer = it
+                    if (!isExpanded) {
+                        onPlayerSelected(it)
                     }
                 }
-
             }
-            if (isExpanded) {
-                if (selectedPlayer == null) selectedPlayer = playerList.firstOrNull()
-                selectedPlayer?.let { player ->
-                    PlayerDetailsViewShared(player, playerHistory)
-                }
+
+        }
+        if (isExpanded) {
+            if (selectedPlayer == null) selectedPlayer = playerList.firstOrNull()
+            selectedPlayer?.let { player ->
+                PlayerDetailsViewShared(windowSizeClass, player, playerHistory)
             }
         }
     }

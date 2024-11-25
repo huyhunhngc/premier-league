@@ -12,6 +12,7 @@ koalaplot = "0.5.3"
 koin = "4.0.0"
 ktor = "3.0.0"
 material3Desktop = "1.7.0"
+material3WindowSizeClassMultiplatform = "0.5.0"
 slf4j = "2.0.16"
 skie = "0.9.3"
 datastore = "1.1.1"
@@ -41,6 +42,7 @@ navigationCompose = "2.8.4"
 navigationComposeVersion = "2.8.4"
 sqliteKtx = "2.4.0"
 sqliteAndroid = "2.5.0-alpha11"
+material3WindowSizeClassAndroid = "1.3.1"
 
 
 [libraries]
@@ -64,7 +66,6 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-material3 =  { group = "androidx.compose.material3", name = "material3" }
-androidx-compose-material3-WindowSizeClass =  { group = "androidx.compose.material3", name="material3-window-size-class" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigationCompose" }
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidxLifecycle" }
@@ -72,6 +73,7 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
 material3-desktop = { module = "org.jetbrains.compose.material3:material3-desktop", version.ref = "material3Desktop" }
+material3-window-size-multiplatform = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "material3WindowSizeClassMultiplatform" }
 multik-api = { module = "org.jetbrains.kotlinx:multik-api", version.ref = "multikApi" }
 multik-jvm = { module = "org.jetbrains.kotlinx:multik-jvm", version.ref = "multikJvm" }
 okalgo = { module = "org.ojalgo:okalgo", version.ref = "okalgo" }
