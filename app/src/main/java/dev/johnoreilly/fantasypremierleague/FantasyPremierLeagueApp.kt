@@ -41,8 +41,6 @@ fun FantasyPremierLeagueApp(
     }
 }
 
-
-
 @Composable
 fun AppNavHost(
     windowSize: WindowSizeClass,

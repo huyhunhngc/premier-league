@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.johnoreilly.common.model.PlayerPastHistory
 import dev.johnoreilly.common.ui.theme.primaryEplContainer
@@ -82,7 +83,7 @@ fun BarSamplePlot(
                 series = listOf(barChartEntries.value),
                 bar = { _, _, value ->
                     DefaultVerticalBar(
-                        brush = SolidColor(primaryEplContainer),
+                        brush = SolidColor(MaterialTheme.colorScheme.primary),
                         modifier = Modifier.fillMaxWidth(barWidth),
                     ) {
                         HoverSurface { Text(value.yMax.toString()) }
@@ -111,7 +112,8 @@ fun ChartTitle(title: String) {
     Column {
         Text(
             title,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
@@ -122,7 +124,8 @@ fun ChartTitle(title: String) {
 fun AxisTitle(title: String, modifier: Modifier = Modifier) {
     Text(
         title,
-        color = MaterialTheme.colorScheme.onBackground,
+        color = MaterialTheme.colorScheme.tertiary,
+        fontWeight = FontWeight.Bold,
         style = MaterialTheme.typography.titleSmall,
         modifier = modifier
     )
@@ -132,7 +135,7 @@ fun AxisTitle(title: String, modifier: Modifier = Modifier) {
 fun AxisLabel(label: String, modifier: Modifier = Modifier) {
     Text(
         label,
-        color = MaterialTheme.colorScheme.onBackground,
+        color = MaterialTheme.colorScheme.tertiary,
         style = MaterialTheme.typography.titleSmall,
         modifier = modifier
     )

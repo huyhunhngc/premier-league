@@ -1,9 +1,5 @@
 package dev.johnoreilly.common.ui.features.main
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(val title: String) {
@@ -17,26 +13,13 @@ sealed class Screen(val title: String) {
     data object SettingsScreen : Screen("SettingsScreen")
 }
 
-data class BottomNavigationItem(
+data class NavigationItem(
     val route: String,
     val icon: ImageVector,
     val iconContentDescription: String
 )
 
-val bottomNavigationItems = listOf(
-    BottomNavigationItem(
-        Screen.PlayerListScreen.title,
-        Icons.Default.Person,
-        "Player"
-    ),
-    BottomNavigationItem(
-        Screen.FixtureListScreen.title,
-        Icons.Filled.DateRange,
-        "Fixtures"
-    ),
-    BottomNavigationItem(
-        Screen.LeagueStandingsListScreen.title,
-        Icons.Filled.Search,
-        "League"
-    )
-)
+enum class NavigationType {
+    BottomNavigation,
+    NavigationRail,
+}

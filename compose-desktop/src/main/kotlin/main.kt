@@ -1,17 +1,15 @@
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import dev.johnoreilly.common.di.initKoin
-import dev.johnoreilly.common.ui.theme.PremierLeagueTypography
 import org.koin.core.Koin
-import presentation.main.MainGraph
 import java.awt.Dimension
 
 @Suppress("CompositionLocalAllowlist")
@@ -31,14 +29,13 @@ fun main() = application {
     ) {
         window.minimumSize = Dimension(300, 800)
         val windowSize = calculateWindowSizeClass()
-        MaterialTheme(
-            typography = PremierLeagueTypography()
+        CompositionLocalProvider(
+            LocalKoin provides koin
         ) {
-            CompositionLocalProvider(
-                LocalKoin provides koin
-            ) {
-                MainGraph(windowSize)
-            }
+            FantasyPremierLeagueApp(
+                windowSize,
+                Modifier
+            )
         }
     }
 }

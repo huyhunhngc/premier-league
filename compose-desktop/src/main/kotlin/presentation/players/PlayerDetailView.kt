@@ -2,6 +2,7 @@ package presentation.players
 
 import LocalKoin
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -24,6 +25,7 @@ import dev.johnoreilly.common.ui.features.player.PlayerDetailsViewShared
 
 @Composable
 fun PlayerDetailsView(
+    padding: PaddingValues,
     windowSizeClass: WindowSizeClass,
     playerId: Int,
     popBackStack: () -> Unit
@@ -38,7 +40,7 @@ fun PlayerDetailsView(
             playerHistory = repository.getPlayerHistoryData(player.id)
         }
 
-        Scaffold { padding ->
+        Scaffold(modifier = Modifier.padding(padding)) { padding ->
             Column(Modifier.padding(padding)) {
                 PlayerDetailsViewShared(windowSizeClass, player, playerHistory)
             }

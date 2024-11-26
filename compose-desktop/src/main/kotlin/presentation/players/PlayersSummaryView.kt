@@ -4,6 +4,7 @@ import LocalKoin
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,6 +48,7 @@ import androidx.compose.material.TextField as ComposeTextField
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @Composable
 fun PlayersSummaryView(
+    padding: PaddingValues,
     windowSizeClass: WindowSizeClass,
     onPlayerSelected: (player: Player) -> Unit,
 ) {
@@ -72,7 +74,7 @@ fun PlayersSummaryView(
     }.collectAsState(emptyList())
 
     isExpanded = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
-    Row(Modifier.fillMaxSize()) {
+    Row(Modifier.fillMaxSize().padding(padding)) {
         Box(
             modifier = Modifier.fillMaxWidth(if (isExpanded) 0.3f else 1f),
             contentAlignment = Alignment.Center
@@ -83,7 +85,7 @@ fun PlayersSummaryView(
                     onValueChange = { searchQuery = it },
                     onValueClear = { searchQuery = "" }
                 )
-                PlayerListView(playerList, selectedPlayer) {
+                PlayerListView(isExpanded, playerList, selectedPlayer) {
                     selectedPlayer = it
                     if (!isExpanded) {
                         onPlayerSelected(it)

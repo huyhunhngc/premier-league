@@ -1,4 +1,4 @@
-package dev.johnoreilly.fantasypremierleague.presentation.main
+package presentation.main
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -34,7 +33,7 @@ fun NavGraphBuilder.mainGraph(
     mainNestedGraph: NavGraphBuilder.(mainNestedNavController: NavController, PaddingValues) -> Unit,
 ) {
     composable(Screen.MainScreen.title) {
-        MainScreen(
+        MainView(
             windowSizeClass = windowSize,
             navController = mainNestedNavController,
             mainNestedGraph = mainNestedGraph
@@ -43,24 +42,22 @@ fun NavGraphBuilder.mainGraph(
 }
 
 @Composable
-fun MainScreen(
+fun MainView(
     windowSizeClass: WindowSizeClass,
     navController: NavHostController = rememberNavController(),
-    mainNestedGraph: NavGraphBuilder.(mainNestedNavController: NavController, PaddingValues) -> Unit,
+    mainNestedGraph: NavGraphBuilder.(mainNestedNavController: NavController, PaddingValues) -> Unit
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val navigationType: NavigationType =
         when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> NavigationType.BottomNavigation
-            WindowWidthSizeClass.Medium -> NavigationType.NavigationRail
             WindowWidthSizeClass.Expanded -> NavigationType.NavigationRail
             else -> NavigationType.BottomNavigation
         }
     Row(modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(navigationType == NavigationType.NavigationRail) {
             FantasyPremierLeagueNavigationRail(
-                navigationItems = bottomNavigationItems,
+                navigationItems = navigationItems,
                 onTabSelected = { route ->
                     navController.navigate(route) {
                         navController.graph.route?.let {
@@ -79,11 +76,13 @@ fun MainScreen(
             bottomBar = {
                 AnimatedVisibility(navigationType == NavigationType.BottomNavigation) {
                     FantasyPremierLeagueBottomNavigation(
-                        bottomNavigationItems = bottomNavigationItems,
+                        bottomNavigationItems = navigationItems,
                         onTabSelected = { route ->
                             navController.navigate(route) {
-                                popUpTo(navController.graph.id) {
-                                    saveState = true
+                                navController.graph.route?.let {
+                                    popUpTo(it) {
+                                        saveState = true
+                                    }
                                 }
                                 launchSingleTop = true
                                 restoreState = true
@@ -95,16 +94,16 @@ fun MainScreen(
             },
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
         ) { padding ->
-            NavHostWithSharedAxisX(navController, startDestination = Screen.PlayerListScreen.title) {
+            NavHostWithSharedAxisX(navController, startDestination = Screen.PlayerSummaryScreen.title) {
                 mainNestedGraph(navController, PaddingValues(bottom = padding.calculateBottomPadding()))
             }
         }
     }
 }
 
-val bottomNavigationItems = listOf(
+val navigationItems = listOf(
     NavigationItem(
-        Screen.PlayerListScreen.title,
+        Screen.PlayerSummaryScreen.title,
         Icons.Default.Person,
         "Player"
     ),
@@ -112,10 +111,5 @@ val bottomNavigationItems = listOf(
         Screen.FixtureListScreen.title,
         Icons.Filled.DateRange,
         "Fixtures"
-    ),
-    NavigationItem(
-        Screen.LeagueStandingsListScreen.title,
-        Icons.Filled.Search,
-        "League"
     )
 )
