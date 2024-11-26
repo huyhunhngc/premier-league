@@ -145,7 +145,7 @@ fun SearchView(
         value = searchValue,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp, horizontal = 0.dp)
+            .padding(vertical = 12.dp, horizontal = 4.dp)
             .clip(shape = RoundedCornerShape(32.dp))
             .placeholder(
                 visible = isDataLoading,

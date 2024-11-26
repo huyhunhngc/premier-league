@@ -1,7 +1,11 @@
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
+import org.jetbrains.compose.ComposePlugin.CommonComponentsDependencies
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.plugin.mpp.BitcodeEmbeddingMode
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -12,10 +16,6 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     id("com.android.library")
-}
-
-kotlin {
-    jvmToolchain(17)
 }
 
 android {
@@ -29,6 +29,10 @@ android {
 }
 
 kotlin {
+    jvmToolchain(17)
+
+    val frameworkName = "FantasyPremierLeagueKit"
+    val xcf = XCFramework(frameworkName)
     listOf(
         iosX64(),
         iosArm64(),
@@ -36,7 +40,7 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             export(libs.androidx.lifecycle.viewmodel)
-            baseName = "FantasyPremierLeagueKit"
+            baseName = frameworkName
         }
     }
 

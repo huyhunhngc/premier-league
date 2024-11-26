@@ -1,5 +1,7 @@
 package dev.johnoreilly.common.ui
 
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +16,7 @@ import org.koin.compose.koinInject
 import platform.UIKit.UIViewController
 
 object SharedViewControllers {
-
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     fun playerDetailsViewController(player: Player): UIViewController =
         ComposeUIViewController {
             val viewModel = koinInject<PlayerDetailsViewModel>()
@@ -24,7 +26,7 @@ object SharedViewControllers {
             LaunchedEffect(player) {
                 playerHistory = viewModel.getPlayerHistory(player.id)
             }
-
-            PlayerDetailsViewShared(player, playerHistory)
+            val windowSizeClass = calculateWindowSizeClass()
+            PlayerDetailsViewShared(windowSizeClass, player, playerHistory)
         }
 }
