@@ -1,9 +1,9 @@
-package dev.johnoreilly.common.ui.ext
+package dev.johnoreilly.common.ui.extension
 
 import dev.johnoreilly.common.model.Player
 
 fun Player.extractTeamCode(): Triple<Long, Long, Long> {
-    val regex = """t(\w+)\.png""".toRegex()
+    val regex = """t(\w+)@x2\.png""".toRegex()
     val matchResult = regex.find(teamPhotoUrl)
     val teamCode = try {
         matchResult?.groups?.get(1)?.value!!.toInt()

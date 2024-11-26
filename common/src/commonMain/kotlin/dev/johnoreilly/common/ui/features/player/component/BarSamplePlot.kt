@@ -1,4 +1,4 @@
-package dev.johnoreilly.common.ui.component
+package dev.johnoreilly.common.ui.features.player.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

@@ -1,12 +1,13 @@
-package dev.johnoreilly.common.ui
+package dev.johnoreilly.common.ui.features.main
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(val title: String) {
+    data object MainScreen : Screen("MainScreen")
     data object PlayerListScreen : Screen("PlayerListScreen")
     data object PlayerSummaryScreen : Screen("PlayerSummaryScreen")
     data object PlayerDetailsScreen : Screen("PlayerDetailsScreen")
@@ -35,7 +36,7 @@ val bottomNavigationItems = listOf(
     ),
     BottomNavigationItem(
         Screen.LeagueStandingsListScreen.title,
-        Icons.Filled.List,
+        Icons.Filled.Search,
         "League"
     )
 )

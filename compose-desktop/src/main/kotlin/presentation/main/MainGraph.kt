@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import dev.johnoreilly.common.ui.Screen
+import dev.johnoreilly.common.ui.features.main.Screen
 import presentation.players.PlayerDetailsView
 import presentation.players.PlayersSummaryView
 

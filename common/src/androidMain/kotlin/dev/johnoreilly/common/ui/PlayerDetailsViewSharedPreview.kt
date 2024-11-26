@@ -1,12 +1,12 @@
 package dev.johnoreilly.common.ui
 
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import dev.johnoreilly.common.model.Player
 import dev.johnoreilly.common.model.PlayerPastHistory
+import dev.johnoreilly.common.ui.features.player.PlayerDetailsViewShared
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Preview

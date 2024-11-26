@@ -1,4 +1,4 @@
-package dev.johnoreilly.fantasypremierleague.presentation.fixtures
+package dev.johnoreilly.fantasypremierleague.presentation.fixtures.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

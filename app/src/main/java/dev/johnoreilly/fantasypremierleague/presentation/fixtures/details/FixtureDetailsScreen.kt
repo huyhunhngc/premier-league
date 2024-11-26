@@ -1,9 +1,10 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
-package dev.johnoreilly.fantasypremierleague.presentation.fixtures.FixtureDetails
+package dev.johnoreilly.fantasypremierleague.presentation.fixtures.details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,11 +29,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.johnoreilly.common.model.GameFixture
 import dev.johnoreilly.common.viewmodel.FixturesViewModel
-import dev.johnoreilly.fantasypremierleague.presentation.fixtures.ClubInFixtureView
+import dev.johnoreilly.fantasypremierleague.presentation.fixtures.component.ClubInFixtureView
 import org.koin.compose.koinInject
 
 @Composable
-fun FixtureDetailsView(fixtureId: Int, popBackStack: () -> Unit) {
+fun FixtureDetailsScreen(
+    padding: PaddingValues = PaddingValues(),
+    fixtureId: Int,
+    popBackStack: () -> Unit
+) {
     val viewModel = koinInject<FixturesViewModel>()
 
     val fixture by produceState<GameFixture?>(initialValue = null) {
@@ -41,6 +46,7 @@ fun FixtureDetailsView(fixtureId: Int, popBackStack: () -> Unit) {
 
     fixture?.let { fixture ->
         Scaffold(
+            modifier = Modifier.padding(padding),
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
@@ -52,7 +58,8 @@ fun FixtureDetailsView(fixtureId: Int, popBackStack: () -> Unit) {
                         }
                     }
                 )
-            }) {
+            }
+        ) {
             Column(
                 modifier = Modifier.padding(it).fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally

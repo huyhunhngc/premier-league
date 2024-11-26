@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.ComposeUIViewController
 import dev.johnoreilly.common.model.Player
 import dev.johnoreilly.common.model.PlayerPastHistory
+import dev.johnoreilly.common.ui.features.player.PlayerDetailsViewShared
 import dev.johnoreilly.common.viewmodel.PlayerDetailsViewModel
 import org.koin.compose.koinInject
 import platform.UIKit.UIViewController

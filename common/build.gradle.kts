@@ -80,6 +80,7 @@ kotlin {
 
             implementation(libs.koalaplot.core)
             implementation(libs.image.loader)
+            api(libs.jetbrains.navigation.compose)
             api(libs.material3.window.size.multiplatform)
         }
 

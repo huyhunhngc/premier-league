@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import dev.johnoreilly.common.data.repository.FantasyPremierLeagueRepository
 import dev.johnoreilly.common.model.Player
 import dev.johnoreilly.common.model.PlayerPastHistory
-import dev.johnoreilly.common.ui.PlayerDetailsViewShared
+import dev.johnoreilly.common.ui.features.player.PlayerDetailsViewShared
 
 @Composable
 fun PlayerDetailsView(

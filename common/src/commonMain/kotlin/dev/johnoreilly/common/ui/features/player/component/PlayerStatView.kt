@@ -1,4 +1,4 @@
-package dev.johnoreilly.common.ui.component
+package dev.johnoreilly.common.ui.features.player.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,7 +32,7 @@ fun PlayerStatView(statName: String, statValue: String) {
             Column {
                 Text(
                     text = statValue,
-                    color = primaryEpl,
+                    color = MaterialTheme.colorScheme.tertiary,
                     fontWeight = FontWeight.Bold
                 )
             }

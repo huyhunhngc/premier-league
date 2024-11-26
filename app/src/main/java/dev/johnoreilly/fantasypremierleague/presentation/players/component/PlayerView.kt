@@ -1,13 +1,19 @@
-package dev.johnoreilly.fantasypremierleague.presentation.players
+package dev.johnoreilly.fantasypremierleague.presentation.players.component
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.google.accompanist.placeholder.placeholder
@@ -28,11 +34,11 @@ fun PlayerView(
             .clickable { onPlayerSelected(player) }
     ) {
         AsyncImage(
-            model = player.photoUrl,
+            model = player.teamPhotoUrl,
             contentDescription = player.name,
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .size(60.dp)
+                .size(50.dp)
                 .placeholder(visible = isDataLoading, lowfidelitygray)
         )
         Spacer(modifier = Modifier.size(12.dp))
@@ -44,19 +50,19 @@ fun PlayerView(
             Text(
                 modifier = Modifier.placeholder(visible = isDataLoading, lowfidelitygray),
                 text = player.name,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
             )
             Spacer(modifier = Modifier.size(1.dp))
             Text(
                 modifier = Modifier.placeholder(visible = isDataLoading, lowfidelitygray),
                 text = player.team,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleSmall,
             )
         }
         Text(
             modifier = Modifier.placeholder(visible = isDataLoading, lowfidelitygray),
             text = player.points.toString(),
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
         )
     }
 }

@@ -15,7 +15,6 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation(projects.common)
     implementation(libs.image.loader)
-    implementation(libs.jetbrains.navigation.compose)
     implementation(libs.material3.desktop)
 }
 

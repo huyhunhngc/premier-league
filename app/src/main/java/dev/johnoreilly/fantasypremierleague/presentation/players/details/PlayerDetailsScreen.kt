@@ -1,19 +1,19 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package dev.johnoreilly.fantasypremierleague.presentation.players.playerDetails
+package dev.johnoreilly.fantasypremierleague.presentation.players.details
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
@@ -25,14 +25,16 @@ import androidx.lifecycle.compose.LifecycleStartEffect
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.johnoreilly.common.model.Player
 import dev.johnoreilly.common.model.PlayerPastHistory
-import dev.johnoreilly.common.ui.PlayerDetailsViewShared
+import dev.johnoreilly.common.ui.component.AutoResizedText
+import dev.johnoreilly.common.ui.features.player.PlayerDetailsViewShared
 import dev.johnoreilly.common.ui.theme.primaryEplContainer
 import dev.johnoreilly.common.viewmodel.PlayerDetailsViewModel
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlayerDetailsView(
+fun PlayerDetailsScreen(
+    padding: PaddingValues = PaddingValues(),
     windowSizeClass: WindowSizeClass,
     playerId: Int,
     popBackStack: () -> Unit
@@ -55,10 +57,11 @@ fun PlayerDetailsView(
     when (val state = uiState) {
         is PlayerDetailsUiState.Data -> {
             Scaffold(
+                modifier = Modifier.padding(padding),
                 topBar = {
                     CenterAlignedTopAppBar(
                         title = {
-                            Text(text = state.player.name)
+                            AutoResizedText(text = state.player.name, maxLines = 1)
                         },
                         navigationIcon = {
                             IconButton(onClick = { popBackStack() }) {
@@ -74,15 +77,18 @@ fun PlayerDetailsView(
                             navigationIconContentColor = Color.White
                         )
                     )
-                }) {
-                Column(Modifier.padding(it)) {
+                }
+            ) {
+                Box(Modifier.padding(top = it.calculateTopPadding())) {
                     PlayerDetailsViewShared(windowSizeClass, state.player, state.playerHistory)
                 }
             }
         }
 
         PlayerDetailsUiState.Loading -> {
-            LinearProgressIndicator()
+            Box(modifier = Modifier.fillMaxSize()) {
+                LinearProgressIndicator()
+            }
         }
     }
 }

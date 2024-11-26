@@ -165,11 +165,11 @@ class FantasyPremierLeagueRepository : KoinComponent {
         private const val PREMIER_LEAGUE_RESOURCE_URL = "https://resources.premierleague.com/premierleague"
 
         fun teamPhotoUrl(teamCode: Int?): String {
-            return "$PREMIER_LEAGUE_RESOURCE_URL/badges/100/t$teamCode.png"
+            return "$PREMIER_LEAGUE_RESOURCE_URL/badges/100/t$teamCode@x2.png"
         }
 
         fun playerPhotoUrl(playerId: Int): String {
-            return "$PREMIER_LEAGUE_RESOURCE_URL/photos/players/110x140/p$playerId.png"
+            return "$PREMIER_LEAGUE_RESOURCE_URL/photos/players/250x250/p$playerId.png"
         }
     }
 }

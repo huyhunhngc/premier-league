@@ -38,11 +38,8 @@ multikApi = "0.1.1"
 multikJvm = "0.1.1"
 okalgo = "0.0.2"
 kotlinStatistics = "1.2.1"
-navigationCompose = "2.8.4"
-navigationComposeVersion = "2.8.4"
 sqliteKtx = "2.4.0"
 sqliteAndroid = "2.5.0-alpha11"
-material3WindowSizeClassAndroid = "1.3.1"
 
 
 [libraries]
@@ -106,8 +103,6 @@ slf4j = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
 
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 junit = { module = "junit:junit", version.ref = "junit" }
-androidx-datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion" }
 androidx-sqlite-ktx = { group = "androidx.sqlite", name = "sqlite-ktx", version.ref = "sqliteKtx" }
 androidx-sqlite-android = { group = "androidx.sqlite", name = "sqlite-android", version.ref = "sqliteAndroid" }
 

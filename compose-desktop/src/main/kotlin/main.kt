@@ -12,6 +12,7 @@ import dev.johnoreilly.common.di.initKoin
 import dev.johnoreilly.common.ui.theme.PremierLeagueTypography
 import org.koin.core.Koin
 import presentation.main.MainGraph
+import java.awt.Dimension
 
 @Suppress("CompositionLocalAllowlist")
 val LocalKoin = compositionLocalOf<Koin> {
@@ -28,6 +29,7 @@ fun main() = application {
         state = windowState,
         title = "Fantasy Premier League"
     ) {
+        window.minimumSize = Dimension(300, 800)
         val windowSize = calculateWindowSizeClass()
         MaterialTheme(
             typography = PremierLeagueTypography()
