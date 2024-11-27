@@ -28,8 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.johnoreilly.common.model.GameFixture
+import dev.johnoreilly.common.ui.features.fixtures.ClubInFixtureView
 import dev.johnoreilly.common.viewmodel.FixturesViewModel
-import dev.johnoreilly.fantasypremierleague.presentation.fixtures.component.ClubInFixtureView
 import org.koin.compose.koinInject
 
 @Composable
@@ -61,7 +61,9 @@ fun FixtureDetailsScreen(
             }
         ) {
             Column(
-                modifier = Modifier.padding(it).fillMaxSize(),
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -97,8 +99,12 @@ fun FixtureDetailsScreen(
                 }
 
                 fixture.localKickoffTime.let { localKickoffTime ->
-                    val formattedTime = "%02d:%02d".format(localKickoffTime.hour, localKickoffTime.minute)
-                    PastFixtureStatView(statName = "Date", statValue = localKickoffTime.date.toString())
+                    val formattedTime =
+                        "%02d:%02d".format(localKickoffTime.hour, localKickoffTime.minute)
+                    PastFixtureStatView(
+                        statName = "Date",
+                        statValue = localKickoffTime.date.toString()
+                    )
                     PastFixtureStatView(statName = "Kick Off Time", statValue = formattedTime)
                 }
             }

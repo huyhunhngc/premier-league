@@ -1,5 +1,7 @@
 [versions]
 accompanistSystemuicontroller = "0.30.1"
+coilComposeVersion = "3.0.4"
+core = "1.6.1"
 jetbrainsNavigationCompose = "2.7.0-alpha07"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.25"
@@ -13,6 +15,8 @@ koin = "4.0.0"
 ktor = "3.0.0"
 material3Desktop = "1.7.0"
 material3WindowSizeClassMultiplatform = "0.5.0"
+robolectric = "4.13"
+runner = "1.6.2"
 slf4j = "2.0.16"
 skie = "0.9.3"
 datastore = "1.1.1"
@@ -44,6 +48,10 @@ sqliteAndroid = "2.5.0-alpha11"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
+androidx-core = { module = "androidx.test:core", version.ref = "core" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilComposeVersion" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilComposeVersion" }
 jetbrains-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "jetbrainsNavigationCompose" }
 kotlin-statistics = { module = "org.nield:kotlin-statistics", version.ref = "kotlinStatistics" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -74,11 +82,11 @@ material3-window-size-multiplatform = { module = "dev.chrisbanes.material3:mater
 multik-api = { module = "org.jetbrains.kotlinx:multik-api", version.ref = "multikApi" }
 multik-jvm = { module = "org.jetbrains.kotlinx:multik-jvm", version.ref = "multikJvm" }
 okalgo = { module = "org.ojalgo:okalgo", version.ref = "okalgo" }
+robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 datastore-preferences = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
 
-coilCompose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 accompanist-placeholder = { group = "com.google.accompanist", name = "accompanist-placeholder-material3", version.ref = "accompanist" }
 image-loader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "image-loader" }
 koalaplot-core = { module = "io.github.koalaplot:koalaplot-core", version.ref = "koalaplot" }

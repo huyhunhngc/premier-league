@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.placeholder.placeholder
 import dev.johnoreilly.common.model.GameFixture
+import dev.johnoreilly.common.ui.features.fixtures.FixtureView
 import dev.johnoreilly.common.viewmodel.FixturesViewModel
-import dev.johnoreilly.fantasypremierleague.presentation.fixtures.component.FixtureView
 import dev.johnoreilly.fantasypremierleague.presentation.global.lowfidelitygray
 import dev.johnoreilly.fantasypremierleague.presentation.global.maroon200
 import org.koin.androidx.compose.koinViewModel
@@ -59,7 +59,6 @@ fun FixturesScreen(
                 title = {
                     GameweekSelector(
                         selectedGameweek = selectedGameweek.intValue,
-                        isDataLoading = isLoading,
                         onGameweekChanged = { gameweekChange ->
                             if (gameweekChange is GameweekChange.PastGameweek) {
                                 selectedGameweek.intValue -= 1
@@ -72,7 +71,7 @@ fun FixturesScreen(
             )
         }
     ) {
-        Box(Modifier.padding(top = it.calculateTopPadding())) {
+        Box(Modifier.padding(top = it.calculateTopPadding(), start = 16.dp, end = 16.dp)) {
             LazyColumn {
                 val fixtureItems: List<GameFixture> = if (isLoading) placeholderFixtureList
                 else fixturesState.value[selectedGameweek.intValue] ?: emptyList()
@@ -98,14 +97,11 @@ fun FixturesScreen(
 fun GameweekSelector(
     selectedGameweek: Int,
     onGameweekChanged: (gameweekChange: GameweekChange) -> Unit,
-    isDataLoading: Boolean
 ) {
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 10.dp)
-            .placeholder(visible = isDataLoading, lowfidelitygray),
+            .padding(top = 10.dp),
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {

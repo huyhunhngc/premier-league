@@ -76,7 +76,7 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.compose)
-    implementation(libs.coilCompose)
+    implementation(libs.coil.compose)
 
     implementation(libs.accompanist.placeholder)
 
@@ -93,9 +93,9 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
 
-    testImplementation("androidx.test:core:1.6.1")
-    testImplementation("org.robolectric:robolectric:4.13")
-    androidTestImplementation("androidx.test:runner:1.6.2")
+    testImplementation(libs.androidx.core)
+    testImplementation(libs.robolectric)
+    androidTestImplementation(libs.androidx.runner)
 
     implementation(projects.common)
 }

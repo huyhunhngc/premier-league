@@ -1,6 +1,7 @@
 package dev.johnoreilly.common
 
 import android.content.Context
+import androidx.compose.ui.text.intl.Locale
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
@@ -19,6 +20,9 @@ actual fun platformModule() = module {
     single<AppDatabase> { createRoomDatabase(get()) }
 }
 
+actual fun String.format(vararg args: Any?): String {
+    return String.format(this, *args)
+}
 
 fun createRoomDatabase(ctx: Context): AppDatabase {
     val dbFile = ctx.getDatabasePath(dbFileName)

@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import dev.johnoreilly.common.ui.NavHostWithSharedAxisX
 import dev.johnoreilly.common.ui.features.main.Screen
 import dev.johnoreilly.common.ui.theme.PremierLeagueTypography
+import presentation.fixtures.FixturesView
 import presentation.main.mainGraph
 import presentation.players.PlayerDetailsView
 import presentation.players.PlayersSummaryView
@@ -61,7 +62,13 @@ fun AppNavHost(
                 }
             }
             composable(Screen.FixtureListScreen.title) {
-
+                FixturesView(
+                    padding = padding,
+                    windowSize = windowSize,
+                    onFixtureSelected = { fixtureId ->
+                        //mainNestedNavController.navigate(Screen.FixtureDetailsScreen.title + "/${fixtureId}")
+                    }
+                )
             }
         }
     }

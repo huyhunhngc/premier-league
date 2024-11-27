@@ -48,7 +48,7 @@ fun PlayerDetailsScreen(
         }
     }
 
-    val uiState by produceState<PlayerDetailsUiState>(PlayerDetailsUiState.Loading) {
+    val uiState by produceState<PlayerDetailsUiState>(PlayerDetailsUiState.Loading, viewModel) {
         val player = viewModel.getPlayer(playerId)
         val playerHistory = viewModel.getPlayerHistory(playerId)
         value = PlayerDetailsUiState.Data(player, playerHistory)

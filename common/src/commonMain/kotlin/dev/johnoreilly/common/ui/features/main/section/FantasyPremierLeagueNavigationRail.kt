@@ -1,35 +1,46 @@
 package dev.johnoreilly.common.ui.features.main.section
 
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import dev.johnoreilly.common.ui.features.main.NavigationItem
 
 @Composable
 fun FantasyPremierLeagueNavigationRail(
     navigationItems: List<NavigationItem>,
     onTabSelected: ((String) -> Unit),
-    currentRoute: String?
+    currentRoute: String?,
+    content: (@Composable ColumnScope.() -> Unit)? = null
 ) {
     NavigationRail {
-        navigationItems.forEach { bottomNavigationItem ->
+        Spacer(modifier = Modifier.height(16.dp))
+        navigationItems.forEach { item ->
             NavigationRailItem(
                 icon = {
                     Icon(
-                        bottomNavigationItem.icon,
-                        contentDescription = bottomNavigationItem.iconContentDescription
+                        item.icon,
+                        contentDescription = item.iconContentDescription
                     )
                 },
                 label = {
-                    Text(text = bottomNavigationItem.iconContentDescription)
+                    Text(text = item.iconContentDescription, fontWeight = FontWeight.Bold)
                 },
-                selected = currentRoute == bottomNavigationItem.route,
+                selected = currentRoute == item.route,
                 onClick = {
-                    onTabSelected(bottomNavigationItem.route)
+                    onTabSelected(item.route)
                 }
             )
+        }
+        if (content != null) {
+            content()
         }
     }
 }

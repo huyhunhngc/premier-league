@@ -13,11 +13,14 @@ import io.ktor.client.engine.java.*
 import org.koin.dsl.module
 import java.io.File
 
-
 actual fun platformModule() = module {
     single { Java.create() }
     single { dataStore()}
     single<AppDatabase> { createRoomDatabase() }
+}
+
+actual fun String.format(vararg args: Any?): String {
+    return String.format(this, *args)
 }
 
 fun createRoomDatabase(): AppDatabase {
