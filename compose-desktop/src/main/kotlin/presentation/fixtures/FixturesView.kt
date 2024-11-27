@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import dev.johnoreilly.common.data.repository.FantasyPremierLeagueRepository
 import dev.johnoreilly.common.model.GameFixture
 import dev.johnoreilly.common.ui.features.fixtures.FixtureView
+import dev.johnoreilly.common.ui.features.fixtures.GameweekChange
+import dev.johnoreilly.common.ui.features.fixtures.GameweekSelector
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -51,6 +53,16 @@ fun FixturesView(
         else -> 1
     }
     Column(modifier = Modifier.padding(padding)) {
+        GameweekSelector(
+            selectedGameweek = selectedGameweek.intValue,
+            onGameweekChanged = { gameweekChange ->
+                if (gameweekChange is GameweekChange.PastGameweek) {
+                    selectedGameweek.intValue -= 1
+                } else {
+                    selectedGameweek.intValue += 1
+                }
+            }
+        )
         LazyColumn(
             modifier = Modifier.padding(horizontal = 16.dp).background(
                 color = MaterialTheme.colorScheme.background,

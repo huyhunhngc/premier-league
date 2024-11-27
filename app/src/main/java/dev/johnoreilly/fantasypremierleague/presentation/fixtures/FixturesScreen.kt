@@ -35,6 +35,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.placeholder.placeholder
 import dev.johnoreilly.common.model.GameFixture
 import dev.johnoreilly.common.ui.features.fixtures.FixtureView
+import dev.johnoreilly.common.ui.features.fixtures.GameweekChange
+import dev.johnoreilly.common.ui.features.fixtures.GameweekSelector
 import dev.johnoreilly.common.viewmodel.FixturesViewModel
 import dev.johnoreilly.fantasypremierleague.presentation.global.lowfidelitygray
 import dev.johnoreilly.fantasypremierleague.presentation.global.maroon200
@@ -93,108 +95,8 @@ fun FixturesScreen(
     }
 }
 
-@Composable
-fun GameweekSelector(
-    selectedGameweek: Int,
-    onGameweekChanged: (gameweekChange: GameweekChange) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp),
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-
-        if (selectedGameweek > 1) {
-            IconButton(
-                modifier = Modifier
-                    .width(30.dp),
-                onClick = { onGameweekChanged(GameweekChange.PastGameweek) }) {
-                Icon(
-                    Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                    contentDescription = "Back arrow",
-                    tint = maroon200
-                )
-            }
-        } else {
-            Spacer(modifier = Modifier.width(30.dp))
-        }
-
-        Text(
-            text = "Gameweek $selectedGameweek",
-            fontWeight = FontWeight.Normal,
-            fontSize = 20.sp
-        )
-
-        if (selectedGameweek < 38) {
-            IconButton(
-                modifier = Modifier
-                    .width(30.dp),
-                onClick = { onGameweekChanged(GameweekChange.NextGameweek) }) {
-                Icon(
-                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = "Forward arrow",
-                    tint = maroon200
-                )
-            }
-        } else {
-            Spacer(modifier = Modifier.width(30.dp))
-        }
-    }
-}
-
-sealed class GameweekChange {
-    data object NextGameweek : GameweekChange()
-    data object PastGameweek : GameweekChange()
-}
-
 private val placeholderKickoffTime = kotlinx.datetime.LocalDateTime(2022, 9, 5, 13, 30, 0)
-private val placeholderFixtureList = listOf(
-    GameFixture(
-        id = 1,
-        localKickoffTime = placeholderKickoffTime,
-        homeTeam = "Liverpool",
-        awayTeam = "Manchester United",
-        homeTeamPhotoUrl = "",
-        awayTeamPhotoUrl = "",
-        homeTeamScore = null,
-        awayTeamScore = null,
-        event = 0
-    ),
-    GameFixture(
-        id = 1,
-        localKickoffTime = placeholderKickoffTime,
-        homeTeam = "Liverpool",
-        awayTeam = "Manchester United",
-        homeTeamPhotoUrl = "",
-        awayTeamPhotoUrl = "",
-        homeTeamScore = null,
-        awayTeamScore = null,
-        event = 0
-    ),
-    GameFixture(
-        id = 1,
-        localKickoffTime = placeholderKickoffTime,
-        homeTeam = "Liverpool",
-        awayTeam = "Manchester United",
-        homeTeamPhotoUrl = "",
-        awayTeamPhotoUrl = "",
-        homeTeamScore = null,
-        awayTeamScore = null,
-        event = 0
-    ),
-    GameFixture(
-        id = 1,
-        localKickoffTime = placeholderKickoffTime,
-        homeTeam = "Liverpool",
-        awayTeam = "Manchester United",
-        homeTeamPhotoUrl = "",
-        awayTeamPhotoUrl = "",
-        homeTeamScore = null,
-        awayTeamScore = null,
-        event = 0
-    ),
+private val placeholderFixtureList = List(10) {
     GameFixture(
         id = 1,
         localKickoffTime = placeholderKickoffTime,
@@ -206,4 +108,4 @@ private val placeholderFixtureList = listOf(
         awayTeamScore = null,
         event = 0
     )
-)
+}

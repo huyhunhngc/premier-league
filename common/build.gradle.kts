@@ -84,8 +84,6 @@ kotlin {
 
             implementation(libs.koalaplot.core)
             implementation(libs.image.loader)
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.okhttp)
             api(libs.jetbrains.navigation.compose)
             api(libs.material3.window.size.multiplatform)
         }

@@ -42,15 +42,10 @@ fun PlayerListView(
     selectedPlayer: Player?,
     onPlayerSelected: (player: Player) -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .padding(8.dp)
-            .background(color = Color.White)
-            .clip(shape = RoundedCornerShape(3.dp))
-    ) {
+    Box(modifier = Modifier.padding(8.dp)) {
         val windowSize = calculateWindowSizeClass()
         val columnNum = when (windowSize.widthSizeClass) {
-            WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium -> 2
+            WindowWidthSizeClass.Medium -> 2
             else -> 1
         }
         LazyColumn(
@@ -112,7 +107,6 @@ fun PlayerView(
             Text(
                 player.team,
                 style = MaterialTheme.typography.labelMedium,
-                color = Color.DarkGray
             )
         }
         Spacer(modifier = Modifier.width(8.dp))
@@ -120,7 +114,6 @@ fun PlayerView(
             player.points.toString(),
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleMedium,
-            color = Color.DarkGray
         )
     }
 }
