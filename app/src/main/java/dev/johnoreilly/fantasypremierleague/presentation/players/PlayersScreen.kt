@@ -7,10 +7,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -71,7 +72,9 @@ fun PlayersScreen(
     val isDataLoading by remember(allPlayers) { derivedStateOf { allPlayers.value.isEmpty() } }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection).padding(padding),
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .padding(padding),
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -103,27 +106,14 @@ fun PlayersScreen(
                 }
 
                 PlayerListUIState.Loading -> {
-                    LazyColumn {
-                        items(
-                            items = placeHolderPlayerList, itemContent = { player ->
-                                PlayerView(player, onPlayerSelected, isDataLoading)
-                            }
-                        )
+                    LazyColumn(modifier = Modifier.padding(top = it.calculateTopPadding())) {
+                        playerList(windowSizeClass, placeHolderPlayerList, {}, isDataLoading)
                     }
                 }
 
                 is PlayerListUIState.Success -> {
                     LazyColumn(modifier = Modifier.padding(top = it.calculateTopPadding())) {
-                        itemsIndexed(items = uiState.result, itemContent = { index, player ->
-                            if (index == 0) {
-                                Box(modifier = Modifier.clickable { onPlayerSelected(player) }) {
-                                    PlayerHeader(windowSizeClass, player)
-                                }
-                            } else {
-                                PlayerView(player, onPlayerSelected, isDataLoading)
-                            }
-                            HorizontalDivider()
-                        })
+                        playerList(windowSizeClass, uiState.result, onPlayerSelected, isDataLoading)
                     }
                 }
             }
@@ -131,8 +121,32 @@ fun PlayersScreen(
     }
 }
 
+private fun LazyListScope.playerList(
+    windowSize: WindowSizeClass,
+    players: List<Player>,
+    onPlayerSelected: (player: Player) -> Unit,
+    isDataLoading: Boolean
+) {
+    itemsIndexed(items = players, itemContent = { index, player ->
+        if (index == 0) {
+            Box(modifier = Modifier.clickable { onPlayerSelected(player) }) {
+                PlayerHeader(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp),
+                    windowSize = windowSize,
+                    player = player
+                )
+            }
+        } else {
+            PlayerView(player, onPlayerSelected, isDataLoading)
+        }
+        HorizontalDivider()
+    })
+}
+
 @Composable
-fun SearchView(
+private fun SearchView(
     paddingValues: PaddingValues,
     isDataLoading: Boolean,
     searchValue: String,
@@ -189,29 +203,9 @@ fun SearchView(
     )
 }
 
-private val placeHolderPlayerList = listOf(
-    Player(
-        1, "Jordan Henderson", "Liverpool",
-        "", 95, 10.0, 14, 1, ""
-    ),
-    Player(
-        1, "Jordan Henderson", "Liverpool",
-        "", 95, 10.0, 14, 1, ""
-    ),
-    Player(
-        1, "Jordan Henderson", "Liverpool",
-        "", 95, 10.0, 14, 1, ""
-    ),
-    Player(
-        1, "Jordan Henderson", "Liverpool",
-        "", 95, 10.0, 14, 1, ""
-    ),
-    Player(
-        1, "Jordan Henderson", "Liverpool",
-        "", 95, 10.0, 14, 1, ""
-    ),
+private val placeHolderPlayerList = List(10) {
     Player(
         1, "Jordan Henderson", "Liverpool",
         "", 95, 10.0, 14, 1, ""
     )
-)
+}

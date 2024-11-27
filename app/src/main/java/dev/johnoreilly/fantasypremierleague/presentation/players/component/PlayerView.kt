@@ -13,12 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import coil3.request.ImageRequest
-import coil3.request.crossfade
 import com.google.accompanist.placeholder.placeholder
 import dev.johnoreilly.common.model.Player
 import dev.johnoreilly.fantasypremierleague.presentation.global.lowfidelitygray
@@ -32,9 +29,9 @@ fun PlayerView(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
+            .clickable { onPlayerSelected(player) }
             .padding(16.dp)
             .fillMaxWidth()
-            .clickable { onPlayerSelected(player) }
     ) {
         AsyncImage(
             model = player.teamPhotoUrl,

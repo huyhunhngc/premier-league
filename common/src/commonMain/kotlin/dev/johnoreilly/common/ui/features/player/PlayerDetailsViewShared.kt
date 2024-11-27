@@ -27,7 +27,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PlayerDetailsViewShared(
-    windowSizeClass: WindowSizeClass,
+    windowSize: WindowSizeClass,
     player: Player,
     playerHistory: List<PlayerPastHistory>
 ) {
@@ -39,7 +39,11 @@ fun PlayerDetailsViewShared(
 
     LazyColumn {
         item {
-            PlayerHeader(windowSizeClass, player)
+            PlayerHeader(
+                modifier = Modifier.fillMaxWidth().height(200.dp),
+                windowSize = windowSize,
+                player = player
+            )
         }
         item {
             PlayerStatView(stringResource(Res.string.team), player.team)

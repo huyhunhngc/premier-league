@@ -34,26 +34,28 @@ import fantasypremierleague.common.generated.resources.img_player_missing
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun PlayerHeader(windowSizeClass: WindowSizeClass, player: Player) {
-    val isExpanded = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
+fun PlayerHeader(
+    modifier: Modifier = Modifier,
+    windowSize: WindowSizeClass,
+    player: Player
+) {
+    val isExpanded = windowSize.widthSizeClass == WindowWidthSizeClass.Expanded
     if (isExpanded) {
-        HeaderExpanded(player)
+        HeaderExpanded(modifier, player)
     } else {
-        HeaderMobile(player)
+        HeaderMobile(modifier, player)
     }
 }
 
 @Composable
-fun HeaderMobile(player: Player) {
+fun HeaderMobile(modifier: Modifier, player: Player) {
     val (firstname, lastname) = remember(player.name) {
         player.name.split(" ").run { firstOrNull().orEmpty() to lastOrNull().orEmpty() }
     }
     val colorHeader = player.extractTeamCode()
 
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
+        modifier = modifier
             .background(Color(colorHeader.second))
             .paint(
                 painterResource(Res.drawable.background_header_mobile),
@@ -111,15 +113,13 @@ fun HeaderMobile(player: Player) {
 }
 
 @Composable
-fun HeaderExpanded(player: Player) {
+fun HeaderExpanded(modifier: Modifier, player: Player) {
     val (firstname, lastname) = remember(player.name) {
         player.name.split(" ").run { firstOrNull().orEmpty() to lastOrNull().orEmpty() }
     }
     val colorHeader = player.extractTeamCode()
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
+        modifier = modifier
             .background(Color(colorHeader.second))
             .paint(
                 painterResource(Res.drawable.background_header),
