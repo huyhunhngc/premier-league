@@ -3,6 +3,7 @@ package dev.johnoreilly.common.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.datetime.LocalDateTime
+
 @Entity
 data class GameFixture(
     @PrimaryKey val id: Int,

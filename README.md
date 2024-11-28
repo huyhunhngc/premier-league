@@ -22,7 +22,7 @@ This project currently uses iOS16 features (e.g. Swift Charts) so requires use o
 ## Screenshots
 
 ### Android
-<img src="https://github.com/user-attachments/assets/a85b8df8-6806-48a4-9f72-0c3cabe29e1b" width=300/>|
+<img src="https://raw.githubusercontent.com/huyhunhngc/premier-league/refs/heads/main/art/screenshot1.png" width=300/>|
 
 ### iOS
 <img src="https://user-images.githubusercontent.com/6302/233188752-f18cb96d-cf2b-45a1-af7d-fdad0db06dfb.png" width=300/>|

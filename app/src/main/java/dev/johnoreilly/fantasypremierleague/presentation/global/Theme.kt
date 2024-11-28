@@ -39,7 +39,6 @@ private val lightColors = lightColorScheme(
     surfaceTint = md_theme_light_surfaceTint,
 )
 
-
 private val darkColors = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
@@ -69,7 +68,6 @@ private val darkColors = darkColorScheme(
     inversePrimary = md_theme_dark_inversePrimary,
     surfaceTint = md_theme_dark_surfaceTint,
 )
-
 
 @Composable
 fun FantasyPremierLeagueTheme(

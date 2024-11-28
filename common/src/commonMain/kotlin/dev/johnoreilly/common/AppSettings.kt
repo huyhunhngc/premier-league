@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import okio.Path.Companion.toPath
 
-
 fun createDataStore(
     producePath: () -> String,
 ): DataStore<Preferences> = PreferenceDataStoreFactory.createWithPath(
@@ -19,20 +18,15 @@ fun createDataStore(
 )
 
 class AppSettings(private val dataStore: DataStore<Preferences>) {
-
-    val leagues: Flow<List<String>> =
-        dataStore.data
-            .map { preferences ->
-                getLeaguesSettingFromString(preferences[LEAGUES_SETTING])
-            }
-
+    val leagues: Flow<List<String>> = dataStore.data.map { preferences ->
+        getLeaguesSettingFromString(preferences[LEAGUES_SETTING])
+    }
 
     suspend fun updatesLeaguesSetting(leagues: List<String>) {
         dataStore.edit { preferences ->
             preferences[LEAGUES_SETTING] = leagues.joinToString(separator = ",")
         }
     }
-
 
     private fun getLeaguesSettingFromString(settingsString: String?) =
         settingsString?.split(",") ?: emptyList()

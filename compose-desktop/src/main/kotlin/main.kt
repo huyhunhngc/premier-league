@@ -19,7 +19,7 @@ val LocalKoin = compositionLocalOf<Koin> {
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 fun main() = application {
-    val windowState = rememberWindowState(size = DpSize(1000.dp, 800.dp))
+    val windowState = rememberWindowState(size = DpSize(1200.dp, 800.dp))
     val koin = initKoin(enableNetworkLogs = true).koin
 
     Window(

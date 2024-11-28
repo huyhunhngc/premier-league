@@ -8,30 +8,25 @@ import dev.johnoreilly.common.data.model.LeagueStandingsDto
 import dev.johnoreilly.common.data.remote.FantasyPremierLeagueApi
 import dev.johnoreilly.common.database.AppDatabase
 import dev.johnoreilly.common.model.GameFixture
-import dev.johnoreilly.common.model.PlayerPastHistory
 import dev.johnoreilly.common.model.Player
+import dev.johnoreilly.common.model.PlayerPastHistory
 import dev.johnoreilly.common.model.Team
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-
 class FantasyPremierLeagueRepository : KoinComponent {
     private val fantasyPremierLeagueApi: FantasyPremierLeagueApi by inject()
     private val database: AppDatabase by inject()
     private val appSettings: AppSettings by inject()
-
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     val leagues = appSettings.leagues
@@ -162,7 +157,8 @@ class FantasyPremierLeagueRepository : KoinComponent {
     }
 
     companion object {
-        private const val PREMIER_LEAGUE_RESOURCE_URL = "https://resources.premierleague.com/premierleague"
+        private const val PREMIER_LEAGUE_RESOURCE_URL =
+            "https://resources.premierleague.com/premierleague"
 
         fun teamPhotoUrl(teamCode: Int?): String {
             return "$PREMIER_LEAGUE_RESOURCE_URL/badges/100/t$teamCode@x2.png"

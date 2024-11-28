@@ -1,12 +1,19 @@
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import dev.johnoreilly.common.data.repository.AppPreferencesRepository
+import dev.johnoreilly.common.model.AppTheme
 import dev.johnoreilly.common.ui.NavHostWithSharedAxisX
 import dev.johnoreilly.common.ui.features.main.Screen
 import dev.johnoreilly.common.ui.theme.PremierLeagueTypography
@@ -20,7 +27,16 @@ fun FantasyPremierLeagueApp(
     windowSize: WindowSizeClass,
     modifier: Modifier
 ) {
+    val themePreferences by LocalKoin.current.get<AppPreferencesRepository>().getTheme()
+        .collectAsState(AppTheme.SYSTEM)
+    val isDarkTheme = when (themePreferences) {
+        AppTheme.LIGHT -> false
+        AppTheme.DARK -> true
+        AppTheme.SYSTEM -> isSystemInDarkTheme()
+
+    }
     MaterialTheme(
+        colorScheme = if (isDarkTheme) darkColorScheme() else lightColorScheme(),
         typography = PremierLeagueTypography()
     ) {
         AppNavHost(

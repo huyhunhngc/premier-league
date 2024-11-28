@@ -16,9 +16,8 @@ import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-
 sealed class PlayerListUIState {
-    object Loading : PlayerListUIState()
+    data object Loading : PlayerListUIState()
     data class Error(val message: String) : PlayerListUIState()
     data class Success(val result: List<Player>) : PlayerListUIState()
 }

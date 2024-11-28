@@ -1,6 +1,7 @@
 package presentation.players
 
 import LocalKoin
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,12 +21,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -37,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import dev.johnoreilly.common.data.repository.FantasyPremierLeagueRepository
 import dev.johnoreilly.common.model.Player
 import dev.johnoreilly.common.ui.features.player.PlayerDetailsViewShared
-import dev.johnoreilly.common.ui.theme.primaryEpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
@@ -56,14 +54,14 @@ fun PlayersSummaryView(
     val repository = LocalKoin.current.get<FantasyPremierLeagueRepository>()
     var selectedPlayer by rememberSaveable { mutableStateOf<Player?>(null) }
     var searchQuery by rememberSaveable { mutableStateOf("") }
-    val playerHistory by produceState(emptyList(), selectedPlayer){
+    val playerHistory by produceState(emptyList(), selectedPlayer) {
         value = selectedPlayer?.id?.let { repository.getPlayerHistoryData(it) }.orEmpty()
     }
     val playerList by snapshotFlow { searchQuery }.debounce(250).flatMapLatest { searchQueryValue ->
         repository.getPlayers().mapLatest { playerList ->
             playerList.filter {
                 it.name.contains(searchQueryValue, ignoreCase = true) ||
-                    it.team.contains(searchQueryValue, ignoreCase = true)
+                        it.team.contains(searchQueryValue, ignoreCase = true)
             }.sortedByDescending { it.points }
         }
     }.collectAsState(emptyList())
@@ -107,16 +105,22 @@ fun PlayerSearchView(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clip(shape = RoundedCornerShape(36.dp)),
+            .clip(shape = RoundedCornerShape(36.dp))
+            .background(MaterialTheme.colorScheme.secondaryContainer),
         value = searchQuery,
         onValueChange = onValueChange,
         placeholder = {
-            Text(text = "Search", style = MaterialTheme.typography.labelLarge)
+            Text(
+                text = "Search",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = "Search"
+                contentDescription = "Search",
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
             )
         },
         trailingIcon = {
@@ -126,13 +130,13 @@ fun PlayerSearchView(
                         onValueClear()
                     },
                     imageVector = Icons.Default.Clear,
-                    contentDescription = "Clear search"
+                    contentDescription = "Clear search",
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer
                 )
             }
         },
         colors = TextFieldDefaults.textFieldColors(
-            focusedLabelColor = primaryEpl,
-            cursorColor = primaryEpl,
+            textColor = MaterialTheme.colorScheme.onSecondaryContainer,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent

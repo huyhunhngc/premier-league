@@ -32,7 +32,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.seiko.imageloader.rememberImagePainter
 import dev.johnoreilly.common.model.Player
-import dev.johnoreilly.common.ui.extension.gradientBackground
+import dev.johnoreilly.common.extension.gradientBackground
+import dev.johnoreilly.common.ui.theme.primaryEpl
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -74,6 +75,11 @@ fun PlayerView(
     player: Player,
     onPlayerSelected: (player: Player) -> Unit
 ) {
+    val textColor = if (isSelected) {
+        primaryEpl
+    } else {
+        MaterialTheme.colorScheme.onPrimaryContainer
+    }
     Row(
         modifier = modifier
             .height(85.dp)
@@ -102,11 +108,13 @@ fun PlayerView(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.labelLarge,
+                color = textColor,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 player.team,
                 style = MaterialTheme.typography.labelMedium,
+                color = textColor,
             )
         }
         Spacer(modifier = Modifier.width(8.dp))
@@ -114,6 +122,7 @@ fun PlayerView(
             player.points.toString(),
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.titleMedium,
+            color = textColor
         )
     }
 }

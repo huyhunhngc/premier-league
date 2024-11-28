@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.seiko.imageloader.rememberImagePainter
 import dev.johnoreilly.common.model.Player
-import dev.johnoreilly.common.ui.extension.extractTeamCode
+import dev.johnoreilly.common.extension.extractTeamCode
 import fantasypremierleague.common.generated.resources.Res
 import fantasypremierleague.common.generated.resources.background_header
 import fantasypremierleague.common.generated.resources.background_header_mobile

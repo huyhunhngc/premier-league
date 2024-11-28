@@ -1,4 +1,4 @@
-package dev.johnoreilly.common.ui.extension
+package dev.johnoreilly.common.extension
 
 import dev.johnoreilly.common.model.Player
 
