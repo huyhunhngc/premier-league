@@ -12,10 +12,12 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import dev.johnoreilly.common.data.repository.AppPreferencesRepository
 import dev.johnoreilly.common.model.AppTheme
 import dev.johnoreilly.common.ui.NavHostWithSharedAxisX
 import dev.johnoreilly.common.ui.features.main.Screen
+import dev.johnoreilly.common.ui.navigation.PlayerDetailDestination
 import dev.johnoreilly.common.ui.theme.PremierLeagueTypography
 import presentation.fixtures.FixturesView
 import presentation.main.mainGraph
@@ -60,29 +62,24 @@ fun AppNavHost(
                     padding = padding,
                     windowSizeClass = windowSize
                 ) { player ->
-                    mainNestedNavController.navigate(Screen.PlayerDetailsScreen.title + "/${player.id}")
+                    mainNestedNavController.navigate(PlayerDetailDestination(player.id))
                 }
             }
-            composable(
-                Screen.PlayerDetailsScreen.title + "/{playerId}",
-                arguments = listOf(navArgument("playerId") { type = NavType.IntType })
-            ) { navBackStackEntry ->
-                val playerId: Int? = navBackStackEntry.arguments?.getInt("playerId")
-                playerId?.let {
-                    PlayerDetailsView(
-                        padding = padding,
-                        windowSizeClass = windowSize,
-                        playerId = playerId,
-                        popBackStack = { mainNestedNavController.popBackStack() },
-                    )
-                }
+            composable<PlayerDetailDestination> { navBackStackEntry ->
+                val player: PlayerDetailDestination = navBackStackEntry.toRoute()
+                PlayerDetailsView(
+                    padding = padding,
+                    windowSizeClass = windowSize,
+                    playerId = player.playerId,
+                    popBackStack = { mainNestedNavController.popBackStack() },
+                )
             }
             composable(Screen.FixtureListScreen.title) {
                 FixturesView(
                     padding = padding,
                     windowSize = windowSize,
                     onFixtureSelected = { fixtureId ->
-                        //mainNestedNavController.navigate(Screen.FixtureDetailsScreen.title + "/${fixtureId}")
+                        //mainNestedNavController.navigate()
                     }
                 )
             }

@@ -41,6 +41,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
+import presentation.fixtures.localFantasyPremierLeagueRepository
 import androidx.compose.material.TextField as ComposeTextField
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
@@ -48,20 +49,20 @@ import androidx.compose.material.TextField as ComposeTextField
 fun PlayersSummaryView(
     padding: PaddingValues,
     windowSizeClass: WindowSizeClass,
+    repository: FantasyPremierLeagueRepository = localFantasyPremierLeagueRepository(),
     onPlayerSelected: (player: Player) -> Unit,
 ) {
     val isExpanded = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
-    val repository = LocalKoin.current.get<FantasyPremierLeagueRepository>()
     var selectedPlayer by rememberSaveable { mutableStateOf<Player?>(null) }
     var searchQuery by rememberSaveable { mutableStateOf("") }
     val playerHistory by produceState(emptyList(), selectedPlayer) {
         value = selectedPlayer?.id?.let { repository.getPlayerHistoryData(it) }.orEmpty()
     }
-    val playerList by snapshotFlow { searchQuery }.debounce(250).flatMapLatest { searchQueryValue ->
+    val playerList by snapshotFlow { searchQuery }.debounce(250).flatMapLatest { query ->
         repository.getPlayers().mapLatest { playerList ->
             playerList.filter {
-                it.name.contains(searchQueryValue, ignoreCase = true) ||
-                        it.team.contains(searchQueryValue, ignoreCase = true)
+                it.name.contains(query, ignoreCase = true) ||
+                        it.team.contains(query, ignoreCase = true)
             }.sortedByDescending { it.points }
         }
     }.collectAsState(emptyList())
@@ -84,7 +85,6 @@ fun PlayersSummaryView(
                     }
                 }
             }
-
         }
         if (isExpanded) {
             if (selectedPlayer == null) selectedPlayer = playerList.firstOrNull()

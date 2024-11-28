@@ -1,5 +1,6 @@
 package dev.johnoreilly.common.data.repository
 
+import androidx.compose.runtime.Composable
 import dev.johnoreilly.common.AppSettings
 import dev.johnoreilly.common.data.model.BootstrapStaticInfoDto
 import dev.johnoreilly.common.data.model.EventStatusListDto

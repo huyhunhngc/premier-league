@@ -74,8 +74,8 @@ fun FixtureDetailsScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ClubInFixtureView(
-                        fixture.homeTeam,
-                        fixture.homeTeamPhotoUrl
+                        teamName = fixture.homeTeam,
+                        teamPhotoUrl = fixture.homeTeamPhotoUrl
                     )
                     Text(
                         text = "${fixture.homeTeamScore ?: ""}",
@@ -93,8 +93,8 @@ fun FixtureDetailsScreen(
                         fontSize = 25.sp
                     )
                     ClubInFixtureView(
-                        fixture.awayTeam,
-                        fixture.awayTeamPhotoUrl
+                        teamName = fixture.awayTeam,
+                        teamPhotoUrl = fixture.awayTeamPhotoUrl
                     )
                 }
 

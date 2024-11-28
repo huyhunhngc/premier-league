@@ -63,10 +63,8 @@ fun MainScreen(
                 navigationItems = bottomNavigationItems,
                 onTabSelected = { route ->
                     navController.navigate(route) {
-                        navController.graph.route?.let {
-                            popUpTo(it) {
-                                saveState = true
-                            }
+                        popUpTo(navController.graph.id) {
+                            saveState = true
                         }
                         launchSingleTop = true
                         restoreState = true

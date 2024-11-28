@@ -2,23 +2,15 @@ package presentation.main
 
 import LocalKoin
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -27,7 +19,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -35,7 +26,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.johnoreilly.common.data.repository.AppPreferencesRepository
-import dev.johnoreilly.common.data.repository.FantasyPremierLeagueRepository
 import dev.johnoreilly.common.model.AppTheme
 import dev.johnoreilly.common.ui.NavHostWithSharedAxisX
 import dev.johnoreilly.common.ui.component.ToggleThemeIcon
@@ -44,6 +34,7 @@ import dev.johnoreilly.common.ui.features.main.NavigationType
 import dev.johnoreilly.common.ui.features.main.Screen
 import dev.johnoreilly.common.ui.features.main.section.FantasyPremierLeagueBottomNavigation
 import dev.johnoreilly.common.ui.features.main.section.FantasyPremierLeagueNavigationRail
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.mainGraph(
@@ -64,11 +55,12 @@ fun NavGraphBuilder.mainGraph(
 fun MainView(
     windowSizeClass: WindowSizeClass,
     navController: NavHostController = rememberNavController(),
-    mainNestedGraph: NavGraphBuilder.(mainNestedNavController: NavController, PaddingValues) -> Unit
+    mainNestedGraph: NavGraphBuilder.(mainNestedNavController: NavController, PaddingValues) -> Unit,
+    appPreferencesRepository: AppPreferencesRepository = localAppPreferencesRepository()
 ) {
-    val appPreferencesRepository = LocalKoin.current.get<AppPreferencesRepository>()
     val scope = rememberCoroutineScope()
-    val currentTheme by appPreferencesRepository.getTheme().collectAsState(initial = AppTheme.SYSTEM)
+    val currentTheme by appPreferencesRepository.getTheme()
+        .collectAsState(initial = AppTheme.SYSTEM)
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val navigationType: NavigationType =
@@ -83,9 +75,7 @@ fun MainView(
                 onTabSelected = { route ->
                     navController.navigate(route) {
                         navController.graph.route?.let {
-                            popUpTo(it) {
-                                saveState = true
-                            }
+                            popUpTo(it)
                         }
                         launchSingleTop = true
                         restoreState = true
@@ -97,7 +87,9 @@ fun MainView(
                 ToggleThemeIcon(
                     currentTheme = currentTheme,
                     isSystemInDarkTheme = isSystemInDarkTheme(),
-                    toggleTheme = { scope.launch { appPreferencesRepository.saveTheme(it) } }
+                    toggleTheme = {
+                        scope.launch(Dispatchers.IO) { appPreferencesRepository.saveTheme(it) }
+                    }
                 )
             }
         }
@@ -109,9 +101,7 @@ fun MainView(
                         onTabSelected = { route ->
                             navController.navigate(route) {
                                 navController.graph.route?.let {
-                                    popUpTo(it) {
-                                        saveState = true
-                                    }
+                                    popUpTo(it)
                                 }
                                 launchSingleTop = true
                                 restoreState = true
@@ -123,8 +113,14 @@ fun MainView(
             },
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
         ) { padding ->
-            NavHostWithSharedAxisX(navController, startDestination = Screen.PlayerSummaryScreen.title) {
-                mainNestedGraph(navController, PaddingValues(bottom = padding.calculateBottomPadding()))
+            NavHostWithSharedAxisX(
+                navController,
+                startDestination = Screen.PlayerSummaryScreen.title
+            ) {
+                mainNestedGraph(
+                    navController,
+                    PaddingValues(bottom = padding.calculateBottomPadding())
+                )
             }
         }
     }
@@ -142,3 +138,8 @@ val navigationItems = listOf(
         "Fixtures"
     )
 )
+
+@Composable
+fun localAppPreferencesRepository(): AppPreferencesRepository {
+    return LocalKoin.current.get<AppPreferencesRepository>()
+}
