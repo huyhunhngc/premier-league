@@ -1,4 +1,5 @@
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -27,18 +28,11 @@ import presentation.players.PlayersSummaryView
 @Composable
 fun FantasyPremierLeagueApp(
     windowSize: WindowSizeClass,
+    colorScheme: ColorScheme = MaterialTheme.colorScheme,
     modifier: Modifier
 ) {
-    val themePreferences by LocalKoin.current.get<AppPreferencesRepository>().getTheme()
-        .collectAsState(AppTheme.SYSTEM)
-    val isDarkTheme = when (themePreferences) {
-        AppTheme.LIGHT -> false
-        AppTheme.DARK -> true
-        AppTheme.SYSTEM -> isSystemInDarkTheme()
-
-    }
     MaterialTheme(
-        colorScheme = if (isDarkTheme) darkColorScheme() else lightColorScheme(),
+        colorScheme = colorScheme,
         typography = PremierLeagueTypography()
     ) {
         AppNavHost(

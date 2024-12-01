@@ -41,6 +41,7 @@ slf4j = "2.0.16"
 sqlite = "2.5.0-alpha11"
 sqliteAndroid = "2.5.0-alpha11"
 sqliteKtx = "2.4.0"
+jetbrainsKotlinJvm = "2.0.21"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
@@ -124,3 +125,4 @@ room = { id = "androidx.room", version.ref = "androidxRoom" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"}
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }

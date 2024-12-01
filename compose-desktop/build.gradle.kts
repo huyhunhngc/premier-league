@@ -14,6 +14,7 @@ version = "1.0-SNAPSHOT"
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(projects.common)
+    implementation(projects.composewindowtitle)
     implementation(libs.image.loader)
     implementation(libs.material3.desktop)
 }
